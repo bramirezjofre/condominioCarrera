@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %> | Condominio JMC</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body class="bg-app text-app min-h-screen flex flex-col">
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <%- include('_card') %>
+  </main>
+  <footer class="text-center text-xs text-muted py-4">
+    &copy; <%= new Date().getFullYear() %> Condominio Jose Miguel Carrera
+  </footer>
+</body>
+</html>

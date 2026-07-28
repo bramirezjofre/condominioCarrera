@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded font-medium transition-colors;
+  }
+  .btn-primary {
+    @apply btn bg-navy-900 hover:bg-navy-800 text-white;
+  }
+  .btn-gold {
+    @apply btn bg-gold-600 hover:bg-gold-500 text-white;
+  }
+  .card {
+    @apply bg-white border border-border rounded-lg shadow-sm p-5;
+  }
+}

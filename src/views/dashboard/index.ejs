@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %> | Condominio JMC</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body class="bg-app text-app min-h-screen">
+  <div class="flex min-h-screen">
+    <aside class="hidden md:flex md:flex-col w-64 bg-navy-900 text-white p-4">
+      <div class="text-lg font-bold mb-6">
+        <span class="text-gold-500">JMC</span> Condominio
+      </div>
+      <nav class="flex-1 space-y-1">
+        <a href="/app" class="block px-3 py-2 rounded hover:bg-navy-800">Panel principal</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Residentes</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Torres</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Departamentos</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Gastos comunes</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Pagos</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Multas</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Mantenimientos</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Encomiendas</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Comunicados</a>
+      </nav>
+      <form method="post" action="/logout" class="mt-4">
+        <button type="submit" class="w-full bg-gold-600 hover:bg-gold-500 text-white px-3 py-2 rounded">
+          Cerrar sesion
+        </button>
+      </form>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-border px-4 md:px-8 py-3 flex items-center justify-between">
+        <h1 class="text-lg font-semibold text-navy-900"><%= title %></h1>
+        <div class="text-sm text-muted">
+          <%= user.fullName %> &middot; <%= user.isCondominiumAdmin ? 'Admin. general' : 'Usuario' %>
+        </div>
+      </header>
+
+      <main class="p-4 md:p-8 flex-1">
+        <%- include('_content') %>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
