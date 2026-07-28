@@ -115,6 +115,100 @@ async function ensureAdmin(client, condominiumId) {
   return { id: userId, email: env.SEED_ADMIN_EMAIL, username: env.SEED_ADMIN_USERNAME };
 }
 
+async function ensureTower(client, condominiumId, code, name) {
+  const { rows } = await client.query(
+    `SELECT id FROM towers WHERE condominium_id = $1 AND code = $2 LIMIT 1`,
+    [condominiumId, code]
+  );
+  if (rows[0]) return rows[0].id;
+  const inserted = await client.query(
+    `INSERT INTO towers (condominium_id, name, code, floor_count, active)
+     VALUES ($1, $2, $3, 10, true)
+     RETURNING id`,
+    [condominiumId, name, code]
+  );
+  return inserted.rows[0].id;
+}
+
+async function ensureUnit(client, condominiumId, towerId, number, floor) {
+  const { rows } = await client.query(
+    `SELECT id FROM units WHERE tower_id = $1 AND number = $2 LIMIT 1`,
+    [towerId, number]
+  );
+  if (rows[0]) return rows[0].id;
+  const inserted = await client.query(
+    `INSERT INTO units
+       (condominium_id, tower_id, number, floor, kind, proration_factor, area_m2, active)
+     VALUES ($1, $2, $3, $4, 'departamento', 0.001000, 60, true)
+     RETURNING id`,
+    [condominiumId, towerId, number, floor]
+  );
+  return inserted.rows[0].id;
+}
+
+async function ensureTowerAdmin(client, condominiumId, towerId, email, username, fullName, password, assignedBy) {
+  const existing = await client.query(
+    `SELECT u.id FROM app_users u
+     WHERE lower(u.email) = lower($1) OR lower(u.username) = lower($2)
+     LIMIT 1`,
+    [email, username]
+  );
+  let userId;
+  if (existing.rows[0]) {
+    userId = existing.rows[0].id;
+  } else {
+    const person = await client.query(
+      `INSERT INTO people (first_name, last_name, email, active)
+       VALUES ($1, $2, $3, true)
+       RETURNING id`,
+      [fullName, '(Torre)', email]
+    );
+    const passwordHash = await hashPassword(password);
+    const user = await client.query(
+      `INSERT INTO app_users (person_id, email, username, password_hash, status, must_change_password)
+       VALUES ($1, $2, $3, $4, 'active', true)
+       RETURNING id`,
+      [person.rows[0].id, email, username, passwordHash]
+    );
+    userId = user.rows[0].id;
+  }
+
+  const role = await client.query(`SELECT id FROM roles WHERE code = 'tower_admin' LIMIT 1`);
+  if (!role.rows[0]) throw new Error('Rol tower_admin no existe tras ensureRoles');
+
+  await client.query(
+    `UPDATE user_role_assignments
+       SET ends_at = now()
+     WHERE user_id = $1
+       AND scope_type = 'tower'
+       AND tower_id = $2
+       AND ends_at IS NULL`,
+    [userId, towerId]
+  );
+
+  const exists = await client.query(
+    `SELECT 1 FROM user_role_assignments
+     WHERE user_id = $1
+       AND role_id = $2
+       AND condominium_id = $3
+       AND scope_type = 'tower'
+       AND tower_id = $4
+       AND ends_at IS NULL
+     LIMIT 1`,
+    [userId, role.rows[0].id, condominiumId, towerId]
+  );
+  if (!exists.rows[0]) {
+    await client.query(
+      `INSERT INTO user_role_assignments
+         (user_id, role_id, condominium_id, scope_type, tower_id, is_primary, assigned_by)
+       VALUES ($1, $2, $3, 'tower', $4, true, $5)`,
+      [userId, role.rows[0].id, condominiumId, towerId, assignedBy]
+    );
+  }
+
+  return userId;
+}
+
 async function main() {
   try {
     const result = await withTransaction(async (client) => {
@@ -122,11 +216,54 @@ async function main() {
       await ensurePermissions(client);
       const condominiumId = await ensureCondominium(client);
       const admin = await ensureAdmin(client, condominiumId);
-      return { condominiumId, admin };
+
+      const torre1 = await ensureTower(client, condominiumId, 'T1', 'Torre 1');
+      const torre2 = await ensureTower(client, condominiumId, 'T2', 'Torre 2');
+
+      await ensureUnit(client, condominiumId, torre1, '101', 1);
+      await ensureUnit(client, condominiumId, torre1, '102', 1);
+      await ensureUnit(client, condominiumId, torre2, '201', 2);
+
+      await ensureTowerAdmin(
+        client,
+        condominiumId,
+        torre1,
+        'torre1@condominio.cl',
+        'torre1',
+        'Admin Torre 1',
+        'CambiarEsto123!',
+        admin.id
+      );
+      await ensureTowerAdmin(
+        client,
+        condominiumId,
+        torre2,
+        'torre2@condominio.cl',
+        'torre2',
+        'Admin Torre 2',
+        'CambiarEsto123!',
+        admin.id
+      );
+
+      return { condominiumId, admin, torre1, torre2 };
     });
 
-    logger.info({ admin: result.admin, condominiumId: result.condominiumId }, 'Seed completado');
-    console.log('Seed completado. Admin:', result.admin.email, '/', result.admin.username);
+    logger.info(
+      {
+        admin: result.admin,
+        condominiumId: result.condominiumId,
+        torre1: result.torre1,
+        torre2: result.torre2
+      },
+      'Seed completado'
+    );
+    console.log(
+      'Seed completado. Admin:',
+      result.admin.email,
+      '/',
+      result.admin.username,
+      '| Torre 1: torre1@condominio.cl / Torre 2: torre2@condominio.cl'
+    );
   } catch (err) {
     logger.error({ err }, 'Error en seed');
     console.error('Error en seed:', err.message);

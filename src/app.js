@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import pinoHttp from 'pino-http';
 
-import { env, isProduction } from './config/env.js';
+import { isProduction } from './config/env.js';
 import { logger } from './config/logger.js';
 import { sessionMiddleware } from './config/session.js';
 import { pingDatabase } from './db/health.js';
@@ -64,19 +64,4 @@ export function createApp() {
   app.use(errorHandler);
 
   return app;
-}
-
-if (env.NODE_ENV !== 'test') {
-  const app = createApp();
-  const server = app.listen(env.PORT, () => {
-    logger.info({ port: env.PORT, env: env.NODE_ENV }, 'Servidor iniciado');
-  });
-
-  const shutdown = async (signal) => {
-    logger.info({ signal }, 'Cerrando servidor');
-    server.close(() => process.exit(0));
-    setTimeout(() => process.exit(1), 10_000).unref();
-  };
-  process.on('SIGTERM', shutdown);
-  process.on('SIGINT', shutdown);
 }
