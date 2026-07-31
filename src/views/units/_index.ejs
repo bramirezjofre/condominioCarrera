@@ -1,0 +1,34 @@
+<div class="card max-w-xl">
+  <h2 class="text-lg font-semibold text-navy-900 mb-4">Unidades - Torre <%= tower.code %></h2>
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-left text-muted">
+        <th class="py-2">Numero</th>
+        <th>Piso</th>
+        <th>Tipo</th>
+        <th>Prorrateo</th>
+        <th>Activa</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (units.length === 0) { %>
+        <tr><td colspan="6" class="py-4 text-muted">Sin unidades.</td></tr>
+      <% } %>
+      <% for (const u of units) { %>
+        <tr class="border-t border-border">
+          <td class="py-2"><%= u.number %></td>
+          <td><%= u.floor ?? '-' %></td>
+          <td><%= u.kind %></td>
+          <td><%= u.proration_factor %></td>
+          <td><%= u.active ? 'Si' : 'No' %></td>
+          <td class="text-right">
+            <a href="/app/unidades/<%= u.id %>/editar" class="text-navy-900 hover:underline">Editar</a>
+            <span class="mx-1 text-muted">|</span>
+            <a href="/app/unidades/<%= u.id %>/ocupaciones" class="text-navy-900 hover:underline">Ocupaciones</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <div class="card">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-navy-900"><%= tower.name %> (<%= tower.code %>)</h2>
+      <div class="space-x-2">
+        <a href="/app/torres/<%= tower.id %>/editar" class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Editar</a>
+        <a href="/app/torres/<%= tower.id %>/unidades/nuevo" class="btn-primary">Nueva unidad</a>
+      </div>
+    </div>
+    <dl class="mt-4 grid grid-cols-2 gap-4 text-sm">
+      <div><dt class="text-muted">Pisos</dt><dd><%= tower.floor_count %></dd></div>
+      <div><dt class="text-muted">Detalle</dt><dd><%= tower.address_detail ?? '-' %></dd></div>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3 class="text-base font-semibold text-navy-900">Administrador principal</h3>
+    <% if (administrator) { %>
+      <p class="mt-2"><%= administrator.full_name %> (<%= administrator.email %>)</p>
+    <% } else { %>
+      <p class="mt-2 text-muted">Sin administrador asignado.</p>
+    <% } %>
+  </div>
+
+  <div id="units" class="card">
+    <h3 class="text-base font-semibold text-navy-900">Unidades</h3>
+    <p class="text-sm text-muted">Use la seccion de unidades para crear o editar.</p>
+    <a href="/app/torres/<%= tower.id %>/unidades" class="text-navy-900 hover:underline text-sm">Ver unidades</a>
+  </div>
+</div>

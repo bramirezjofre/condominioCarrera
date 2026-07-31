@@ -11,6 +11,11 @@ import { pingDatabase } from './db/health.js';
 import { requestId } from './middleware/request-id.js';
 import { authRoutes } from './modules/auth/auth.routes.js';
 import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js';
+import { condominiumsRoutes } from './modules/condominiums/condominiums.routes.js';
+import { towersRoutes } from './modules/towers/towers.routes.js';
+import { unitsRoutes } from './modules/units/units.routes.js';
+import { peopleRoutes } from './modules/people/people.routes.js';
+import { occupanciesRoutes } from './modules/occupancies/occupancies.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -59,6 +64,11 @@ export function createApp() {
 
   app.use(authRoutes);
   app.use(dashboardRoutes);
+  app.use(condominiumsRoutes);
+  app.use(towersRoutes);
+  app.use(unitsRoutes);
+  app.use(peopleRoutes);
+  app.use(occupanciesRoutes);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

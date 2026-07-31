@@ -84,6 +84,7 @@ export async function authenticate({ identifier, password, ipAddress, userAgent 
   return {
     id: context.user_id,
     personId: context.person_id,
+    condominiumId: context.condominium_id,
     email: context.email,
     username: context.username,
     fullName: context.full_name,

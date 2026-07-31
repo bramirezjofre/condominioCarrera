@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="flex items-center justify-between">
+    <h2 class="text-lg font-semibold text-navy-900">Torres</h2>
+    <a href="/app/torres/nuevo" class="btn-primary">Nueva torre</a>
+  </div>
+  <table class="mt-4 w-full text-sm">
+    <thead>
+      <tr class="text-left text-muted">
+        <th class="py-2">Codigo</th>
+        <th>Nombre</th>
+        <th>Pisos</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (towers.length === 0) { %>
+        <tr><td colspan="4" class="py-4 text-muted">Sin torres registradas.</td></tr>
+      <% } %>
+      <% for (const t of towers) { %>
+        <tr class="border-t border-border">
+          <td class="py-2"><%= t.code %></td>
+          <td><%= t.name %></td>
+          <td><%= t.floor_count %></td>
+          <td class="text-right">
+            <a href="/app/torres/<%= t.id %>" class="text-navy-900 hover:underline">Ver</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

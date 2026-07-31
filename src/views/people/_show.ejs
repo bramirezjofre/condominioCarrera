@@ -1,0 +1,14 @@
+<div class="card max-w-2xl">
+  <h2 class="text-lg font-semibold text-navy-900 mb-4"><%= title %></h2>
+  <% if (error) { %>
+    <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4 text-sm">
+      <%= error %>
+    </div>
+  <% } %>
+  <dl class="grid grid-cols-2 gap-4 text-sm">
+    <div><dt class="text-muted">Nombre</dt><dd><%= person.full_name %></dd></div>
+    <div><dt class="text-muted">Email</dt><dd><%= person.email ?? '-' %></dd></div>
+    <div><dt class="text-muted">Telefono</dt><dd><%= person.phone ?? '-' %></dd></div>
+    <div><dt class="text-muted">RUN/RUT</dt><dd><%= person.national_id ?? '-' %></dd></div>
+  </dl>
+</div>

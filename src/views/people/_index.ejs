@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold text-navy-900">Personas</h2>
+    <a href="/app/personas/nuevo" class="btn-primary">Nueva persona</a>
+  </div>
+  <form method="get" action="/app/personas" class="mb-4 flex gap-2">
+    <input name="search" value="<%= search %>" placeholder="Buscar..."
+      class="flex-1 border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
+    <button class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Buscar</button>
+  </form>
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-left text-muted">
+        <th class="py-2">Nombre</th>
+        <th>Email</th>
+        <th>Telefono</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (people.length === 0) { %>
+        <tr><td colspan="3" class="py-4 text-muted">Sin personas registradas.</td></tr>
+      <% } %>
+      <% for (const p of people) { %>
+        <tr class="border-t border-border">
+          <td class="py-2"><a href="/app/personas/<%= p.id %>" class="text-navy-900 hover:underline"><%= p.full_name %></a></td>
+          <td><%= p.email ?? '-' %></td>
+          <td><%= p.phone ?? '-' %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

@@ -47,6 +47,22 @@ async function ensurePermissions(client) {
      WHERE r.code = 'condominium_admin'
      ON CONFLICT DO NOTHING`
   );
+
+  const towerAdminPerms = [
+    'towers.team.read',
+    'towers.team.manage',
+    'dashboard.read_assigned_towers',
+    'users.read'
+  ];
+  await client.query(
+    `INSERT INTO role_permissions (role_id, permission_id)
+     SELECT r.id, p.id
+     FROM roles r
+     JOIN permissions p ON p.code = ANY($1::citext[])
+     WHERE r.code = 'tower_admin'
+     ON CONFLICT DO NOTHING`,
+    [towerAdminPerms]
+  );
 }
 
 async function ensureCondominium(client) {
@@ -244,6 +260,45 @@ async function main() {
         'CambiarEsto123!',
         admin.id
       );
+
+      const resident1 = await client.query(
+        `INSERT INTO people (first_name, last_name, email, phone, active)
+         VALUES ('Residente', 'Demo 101', 'res101@condominio.cl', '+56911111111', true)
+         ON CONFLICT DO NOTHING
+         RETURNING id`
+      );
+      const resident2 = await client.query(
+        `INSERT INTO people (first_name, last_name, email, phone, active)
+         VALUES ('Residente', 'Demo 102', 'res102@condominio.cl', '+56911111112', true)
+         ON CONFLICT DO NOTHING
+         RETURNING id`
+      );
+      const unit101 = await client.query(
+        `SELECT id FROM units WHERE tower_id = $1 AND number = '101' LIMIT 1`,
+        [torre1]
+      );
+      const unit102 = await client.query(
+        `SELECT id FROM units WHERE tower_id = $1 AND number = '102' LIMIT 1`,
+        [torre1]
+      );
+      if (unit101.rows[0] && resident1.rows[0]) {
+        await client.query(
+          `INSERT INTO unit_occupancies
+             (unit_id, person_id, occupancy_type, is_primary, starts_on, receives_billing, receives_notifications)
+           VALUES ($1, $2, 'owner', true, current_date, true, true)
+           ON CONFLICT DO NOTHING`,
+          [unit101.rows[0].id, resident1.rows[0].id]
+        );
+      }
+      if (unit102.rows[0] && resident2.rows[0]) {
+        await client.query(
+          `INSERT INTO unit_occupancies
+             (unit_id, person_id, occupancy_type, is_primary, starts_on, receives_billing, receives_notifications)
+           VALUES ($1, $2, 'tenant', true, current_date, true, true)
+           ON CONFLICT DO NOTHING`,
+          [unit102.rows[0].id, resident2.rows[0].id]
+        );
+      }
 
       return { condominiumId, admin, torre1, torre2 };
     });

@@ -30,6 +30,14 @@ export async function getUserContext(userId) {
       u.email,
       u.username,
       p.full_name,
+      bool_or(ura.condominium_id IS NOT NULL) AS has_any_assignment,
+      (
+        SELECT ura2.condominium_id
+        FROM user_role_assignments ura2
+        WHERE ura2.user_id = u.id AND ura2.ends_at IS NULL
+        ORDER BY ura2.starts_at ASC
+        LIMIT 1
+      ) AS condominium_id,
       array_agg(DISTINCT r.code) FILTER (WHERE r.code IS NOT NULL) AS role_codes,
       bool_or(
         ura.scope_type = 'condominium'
