@@ -1,0 +1,29 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Encomiendas registradas', actions: [{ label: 'Nueva encomienda', href: '/app/encomiendas/nueva', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin encomiendas', description: 'Registra la primera encomienda.' }) %>
+  <% } else { %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% for (const p of items) { %>
+        <a href="/app/encomiendas/<%= p.id %>" class="card-tight hover:border-gold-500 transition block">
+          <div class="flex items-center justify-between">
+            <span class="font-display text-base text-navy-900"><%= p.trackingNumber %></span>
+            <% if (p.status === 'delivered') { %>
+              <span class="badge-success">Entregada</span>
+            <% } else if (p.status === 'notified') { %>
+              <span class="badge-info">Notificada</span>
+            <% } else if (p.status === 'returned') { %>
+              <span class="badge-muted">Devuelta</span>
+            <% } else { %>
+              <span class="badge-warning">Recibida</span>
+            <% } %>
+          </div>
+          <p class="text-sm text-muted"><%= p.carrier %></p>
+          <p class="text-sm"><%= p.recipient ? p.recipient.fullName : 'Sin destinatario' %></p>
+          <p class="text-xs text-muted"><%= p.receivedAt %></p>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

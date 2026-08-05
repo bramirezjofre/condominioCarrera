@@ -1,0 +1,24 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos de la multa', actions: [{ label: 'Volver', href: '/app/multas', class: 'btn-secondary' }] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">Motivo</dt><dd class="font-medium"><%= item.reason %></dd></div>
+    <div><dt class="text-muted">Codigo</dt><dd class="font-medium"><%= item.ruleCode %></dd></div>
+    <div><dt class="text-muted">Unidad</dt><dd class="font-medium"><%= unit ? unit.number : '-' %></dd></div>
+    <div><dt class="text-muted">Persona</dt><dd class="font-medium"><%= person ? person.fullName : '-' %></dd></div>
+    <div><dt class="text-muted">Incidente</dt><dd class="font-medium"><%= item.incidentAt %></dd></div>
+    <div><dt class="text-muted">Monto</dt><dd class="font-medium">$ <%= Math.round(item.amount / 1000) %>k</dd></div>
+    <div><dt class="text-muted">Estado</dt><dd class="font-medium"><%= item.status %></dd></div>
+    <div><dt class="text-muted">Notificada</dt><dd class="font-medium"><%= item.notifiedAt || '-' %></dd></div>
+  </section>
+
+  <div class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Acciones</h2>
+    <div class="flex flex-wrap gap-2">
+      <button class="btn-primary" disabled>Notificar</button>
+      <button class="btn-secondary" disabled>Confirmar</button>
+      <button class="btn-danger" disabled>Anular</button>
+      <button class="btn-ghost" disabled>Registrar apelacion</button>
+    </div>
+  </div>
+</div>

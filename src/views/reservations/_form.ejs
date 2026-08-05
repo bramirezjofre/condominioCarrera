@@ -1,0 +1,44 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Solicitud de espacio', actions: [{ label: 'Volver', href: '/app/reservas', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="amenityId" class="label">Espacio</label>
+          <select id="amenityId" name="amenityId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const a of amenities) { %>
+              <option value="<%= a.id %>"><%= a.name %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="unitId" class="label">Unidad</label>
+          <select id="unitId" name="unitId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const u of units) { %>
+              <option value="<%= u.id %>"><%= u.number %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="startsAt" class="label">Inicio</label>
+          <input id="startsAt" name="startsAt" type="datetime-local" class="input" />
+        </div>
+        <div>
+          <label for="endsAt" class="label">Fin</label>
+          <input id="endsAt" name="endsAt" type="datetime-local" class="input" />
+        </div>
+        <div>
+          <label for="attendeeCount" class="label">Asistentes</label>
+          <input id="attendeeCount" name="attendeeCount" type="number" class="input" value="4" />
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Solicitar</button>
+        <a href="/app/reservas" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos del usuario', actions: [{ label: 'Volver', href: '/app/usuarios', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="personId" class="label">Persona</label>
+          <select id="personId" name="personId" class="select">
+            <option value="">Seleccionar...</option>
+            <% for (const p of people) { %>
+              <option value="<%= p.id %>" <%= item.personId === p.id ? 'selected' : '' %>><%= p.fullName %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="username" class="label">Usuario</label>
+          <input id="username" name="username" class="input" value="<%= item.username %>" required />
+        </div>
+        <div>
+          <label for="email" class="label">Email</label>
+          <input id="email" name="email" type="email" class="input" value="<%= item.email %>" required />
+        </div>
+        <div>
+          <label for="status" class="label">Estado</label>
+          <select id="status" name="status" class="select">
+            <% for (const s of ['active','blocked','disabled']) { %>
+              <option value="<%= s %>" <%= item.status === s ? 'selected' : '' %>><%= s %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="role" class="label">Rol primario</label>
+          <select id="role" name="role" class="select">
+            <% for (const r of roles) { %>
+              <option value="<%= r %>"><%= r %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="tower" class="label">Torre</label>
+          <select id="tower" name="tower" class="select">
+            <% for (const t of towers) { %>
+              <option value="<%= t.id %>"><%= t.name %></option>
+            <% } %>
+          </select>
+        </div>
+      </div>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" name="mustChangePassword" <%= item.mustChangePassword ? 'checked' : '' %> /> Debe cambiar contrasena
+      </label>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/usuarios" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<% const items = (typeof crumbs !== 'undefined' && crumbs) || []; %>
+<% if (items.length > 1) { %>
+  <nav class="text-sm text-muted mb-4" aria-label="Ruta de navegacion">
+    <ol class="flex flex-wrap items-center gap-1">
+      <% for (let i = 0; i < items.length; i++) { %>
+        <% const item = items[i]; %>
+        <li class="flex items-center gap-1">
+          <% if (i < items.length - 1) { %>
+            <a href="<%= item.href %>" class="hover:text-navy-900"><%= item.label %></a>
+            <span aria-hidden="true" class="text-muted/60">/</span>
+          <% } else { %>
+            <span class="text-text font-medium" aria-current="page"><%= item.label %></span>
+          <% } %>
+        </li>
+      <% } %>
+    </ol>
+  </nav>
+<% } %>

@@ -1,0 +1,10 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Resumen de encomiendas', actions: [{ label: 'Exportar', href: '#', class: 'btn-secondary' }] }) %>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <%- include('../partials/stat-card', { label: 'Recibidas', value: 6 }) %>
+    <%- include('../partials/stat-card', { label: 'Notificadas', value: 4 }) %>
+    <%- include('../partials/stat-card', { label: 'Entregadas', value: 7 }) %>
+    <%- include('../partials/stat-card', { label: 'Devueltas', value: 1 }) %>
+  </div>
+</div>

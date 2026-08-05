@@ -17,6 +17,7 @@ const schema = z.object({
   SEED_ADMIN_USERNAME: z.string().default('admin'),
   SEED_ADMIN_FULL_NAME: z.string().default('Administrador General'),
   SEED_ADMIN_PASSWORD: z.string().min(8).default('CambiarEsto123!'),
+  DATA_MODE: z.enum(['demo', 'database']).default('demo'),
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().int().positive().optional(),
   SMTP_USER: z.string().optional(),

@@ -1,0 +1,52 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Registro de multa', actions: [{ label: 'Volver', href: '/app/multas', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="unitId" class="label">Unidad</label>
+          <select id="unitId" name="unitId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const u of units) { %>
+              <option value="<%= u.id %>"><%= u.number %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="personId" class="label">Persona</label>
+          <select id="personId" name="personId" class="select">
+            <option value="">Seleccionar...</option>
+            <% for (const p of people) { %>
+              <option value="<%= p.id %>"><%= p.fullName %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="ruleCode" class="label">Codigo</label>
+          <select id="ruleCode" name="ruleCode" class="select">
+            <% for (const c of ['RUIDO','MASCOTA','ESTACIONAMIENTO','BASURA','OBRA','OTRO']) { %>
+              <option value="<%= c %>" <%= item.ruleCode === c ? 'selected' : '' %>><%= c %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="incidentAt" class="label">Fecha</label>
+          <input id="incidentAt" name="incidentAt" type="date" class="input" value="<%= item.incidentAt %>" />
+        </div>
+        <div class="md:col-span-2">
+          <label for="reason" class="label">Motivo</label>
+          <textarea id="reason" name="reason" class="textarea"><%= item.reason || '' %></textarea>
+        </div>
+        <div>
+          <label for="amount" class="label">Monto</label>
+          <input id="amount" name="amount" type="number" class="input" value="<%= item.amount %>" />
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Registrar</button>
+        <a href="/app/multas" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

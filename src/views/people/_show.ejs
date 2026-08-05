@@ -1,14 +1,39 @@
-<div class="card max-w-2xl">
-  <h2 class="text-lg font-semibold text-navy-900 mb-4"><%= title %></h2>
-  <% if (error) { %>
-    <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4 text-sm">
-      <%= error %>
-    </div>
-  <% } %>
-  <dl class="grid grid-cols-2 gap-4 text-sm">
-    <div><dt class="text-muted">Nombre</dt><dd><%= person.full_name %></dd></div>
-    <div><dt class="text-muted">Email</dt><dd><%= person.email ?? '-' %></dd></div>
-    <div><dt class="text-muted">Telefono</dt><dd><%= person.phone ?? '-' %></dd></div>
-    <div><dt class="text-muted">RUN/RUT</dt><dd><%= person.national_id ?? '-' %></dd></div>
-  </dl>
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos de la persona', actions: [{ label: 'Editar', href: '/app/personas/' + person.id + '/editar', class: 'btn-secondary' }] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">RUN / RUT</dt><dd class="font-medium"><%= person.nationalId || '-' %></dd></div>
+    <div><dt class="text-muted">Email</dt><dd class="font-medium"><%= person.email || '-' %></dd></div>
+    <div><dt class="text-muted">Telefono</dt><dd class="font-medium"><%= person.phone || '-' %></dd></div>
+    <div><dt class="text-muted">Fecha de nacimiento</dt><dd class="font-medium"><%= person.birthDate || '-' %></dd></div>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Ocupaciones</h2>
+    <% if (occupancies.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin ocupaciones', description: 'Asigna esta persona a una unidad para comenzar.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const o of occupancies) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium"><%= o.unit ? o.unit.number : 'Sin unidad' %></p>
+              <p class="text-xs text-muted"><%= o.tower ? o.tower.name : '' %> - <%= o.occupancyType %></p>
+            </div>
+            <span class="<%= o.endsOn ? 'badge-muted' : 'badge-success' %>"><%= o.endsOn ? 'Finalizada' : 'Vigente' %></span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Acceso al sistema</h2>
+    <% if (user) { %>
+      <p class="text-sm">Usuario: <strong><%= user.username %></strong> - <%= user.email %></p>
+      <p class="text-xs text-muted mt-1">Estado: <%= user.status %></p>
+    <% } else { %>
+      <p class="text-sm text-muted">Esta persona aun no tiene cuenta de usuario.</p>
+    <% } %>
+  </section>
 </div>

@@ -2,14 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title><%= title %> | Condominio JMC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09264d" />
+  <title><%= title %> | Condominio Jose Miguel Carrera</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
-<body class="bg-app text-app min-h-screen flex items-center justify-center px-4">
-  <div class="card max-w-md text-center">
-    <h1 class="text-2xl font-bold text-navy-900 mb-2">Acceso denegado</h1>
-    <p class="text-sm text-muted"><%= message %></p>
-    <a href="/app" class="inline-block mt-4 bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded">Volver</a>
+<body class="bg-ivory text-text font-sans min-h-screen flex items-center justify-center px-4 bg-gold-pattern">
+  <div class="card-elevated max-w-md text-center">
+    <img src="/img/logo-jmc.jpg" alt="Condominio Jose Miguel Carrera" class="h-16 mx-auto mb-4" />
+    <h1 class="font-display text-3xl text-navy-900 mb-2">Acceso denegado</h1>
+    <p class="text-sm text-muted mb-4"><%= message %></p>
+    <a href="/app" class="btn-primary">Volver al panel</a>
   </div>
 </body>
 </html>

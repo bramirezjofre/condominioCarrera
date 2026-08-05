@@ -1,34 +1,44 @@
-<div class="card max-w-xl">
-  <h2 class="text-lg font-semibold text-navy-900 mb-4">Unidades - Torre <%= tower.code %></h2>
-  <table class="w-full text-sm">
-    <thead>
-      <tr class="text-left text-muted">
-        <th class="py-2">Numero</th>
-        <th>Piso</th>
-        <th>Tipo</th>
-        <th>Prorrateo</th>
-        <th>Activa</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (units.length === 0) { %>
-        <tr><td colspan="6" class="py-4 text-muted">Sin unidades.</td></tr>
-      <% } %>
-      <% for (const u of units) { %>
-        <tr class="border-t border-border">
-          <td class="py-2"><%= u.number %></td>
-          <td><%= u.floor ?? '-' %></td>
-          <td><%= u.kind %></td>
-          <td><%= u.proration_factor %></td>
-          <td><%= u.active ? 'Si' : 'No' %></td>
-          <td class="text-right">
-            <a href="/app/unidades/<%= u.id %>/editar" class="text-navy-900 hover:underline">Editar</a>
-            <span class="mx-1 text-muted">|</span>
-            <a href="/app/unidades/<%= u.id %>/ocupaciones" class="text-navy-900 hover:underline">Ocupaciones</a>
-          </td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Vista general de unidades', actions: [{ label: 'Nueva unidad', href: '#', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin unidades', description: 'Crea departamentos desde una torre.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Unidad</th>
+            <th>Torre</th>
+            <th>Piso</th>
+            <th>Tipo</th>
+            <th>Ocupante</th>
+            <th>Saldo</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const u of items) { %>
+            <tr>
+              <td><span class="font-display text-base text-navy-900"><%= u.number %></span></td>
+              <td><%= u.towerName || u.tower?.name %></td>
+              <td><%= u.floor ?? '-' %></td>
+              <td><%= u.kind %></td>
+              <td><%= u.occupant ? u.occupant.fullName : 'Sin ocupante' %></td>
+              <td>
+                <% if (u.balance > 0) { %>
+                  <span class="badge-warning">$ <%= Math.round(u.balance / 1000) %>k</span>
+                <% } else { %>
+                  <span class="badge-success">Al dia</span>
+                <% } %>
+              </td>
+              <td class="text-right">
+                <a href="/app/unidades/<%= u.id %>" class="text-sm text-navy-900 hover:underline">Ver</a>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
 </div>

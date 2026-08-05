@@ -1,0 +1,13 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Detalle de morosidad', actions: [{ label: 'Exportar', href: '#', class: 'btn-secondary' }] }) %>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <% for (const t of [1,2,3]) { %>
+      <div class="card">
+        <h3 class="font-display text-lg text-navy-900">Torre <%= t %></h3>
+        <p class="text-sm text-muted mt-2">Saldo total: $ <%= 800 + (t * 60) %>k</p>
+        <p class="text-sm text-muted">Unidades en mora: <%= 6 + t %></p>
+      </div>
+    <% } %>
+  </div>
+</div>

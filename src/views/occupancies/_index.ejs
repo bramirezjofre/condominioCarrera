@@ -1,40 +1,32 @@
-<div class="card max-w-2xl">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-semibold text-navy-900">Ocupaciones - Unidad <%= unit.number %></h2>
-    <a href="/app/unidades/<%= unit.id %>/ocupaciones/nuevo" class="btn-primary">Nueva ocupacion</a>
-  </div>
-  <table class="w-full text-sm">
-    <thead>
-      <tr class="text-left text-muted">
-        <th class="py-2">Persona</th>
-        <th>Tipo</th>
-        <th>Principal</th>
-        <th>Desde</th>
-        <th>Hasta</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (occupancies.length === 0) { %>
-        <tr><td colspan="6" class="py-4 text-muted">Sin ocupaciones.</td></tr>
-      <% } %>
-      <% for (const o of occupancies) { %>
-        <tr class="border-t border-border">
-          <td class="py-2"><%= o.full_name %></td>
-          <td><%= o.occupancy_type %></td>
-          <td><%= o.is_primary ? 'Si' : 'No' %></td>
-          <td><%= o.starts_on %></td>
-          <td><%= o.ends_on ?? 'Vigente' %></td>
-          <td class="text-right">
-            <% if (!o.ends_on) { %>
-              <form method="post" action="/app/ocupaciones/<%= o.id %>/finalizar" class="inline">
-                <input type="hidden" name="endsOn" value="<%= new Date().toISOString().slice(0,10) %>" />
-                <button class="text-red-500 hover:underline text-sm">Finalizar</button>
-              </form>
-            <% } %>
-          </td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Ocupantes de la unidad', actions: [{ label: 'Nueva ocupacion', href: '/app/unidades/' + unit.id + '/ocupaciones/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin ocupaciones', description: 'Agrega un ocupante principal para esta unidad.' }) %>
+  <% } else { %>
+    <div class="card table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Persona</th>
+            <th>Tipo</th>
+            <th>Principal</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const o of items) { %>
+            <tr>
+              <td><%= o.person ? o.person.fullName : 'Sin persona' %></td>
+              <td><%= o.occupancyType %></td>
+              <td><span class="<%= o.isPrimary ? 'badge-gold' : 'badge-muted' %>"><%= o.isPrimary ? 'Principal' : 'Secundaria' %></span></td>
+              <td><%= o.startsOn %></td>
+              <td><%= o.endsOn || 'Vigente' %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
 </div>

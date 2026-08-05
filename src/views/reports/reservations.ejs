@@ -1,0 +1,10 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Uso de espacios comunes', actions: [{ label: 'Exportar', href: '#', class: 'btn-secondary' }] }) %>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <%- include('../partials/stat-card', { label: 'Solicitadas', value: 4 }) %>
+    <%- include('../partials/stat-card', { label: 'Aprobadas', value: 5 }) %>
+    <%- include('../partials/stat-card', { label: 'Rechazadas', value: 1 }) %>
+    <%- include('../partials/stat-card', { label: 'Completadas', value: 2 }) %>
+  </div>
+</div>

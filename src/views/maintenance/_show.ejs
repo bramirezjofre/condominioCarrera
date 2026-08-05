@@ -1,0 +1,36 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: item.title, subtitleText: item.category + ' - ' + (tower ? tower.name : ''), actions: [
+    { label: 'Editar', href: '/app/mantenimientos/' + item.id + '/editar', class: 'btn-secondary' },
+    { label: 'Asignar', href: '/app/mantenimientos/' + item.id + '/asignar', class: 'btn-primary' },
+    { label: 'Comentarios', href: '/app/mantenimientos/' + item.id + '/comentarios', class: 'btn-ghost' }
+  ] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">Estado</dt><dd class="font-medium"><%= item.status %></dd></div>
+    <div><dt class="text-muted">Prioridad</dt><dd class="font-medium"><%= item.priority %></dd></div>
+    <div><dt class="text-muted">Unidad</dt><dd class="font-medium"><%= unit ? unit.number : '-' %></dd></div>
+    <div><dt class="text-muted">Torre</dt><dd class="font-medium"><%= tower ? tower.name : '-' %></dd></div>
+    <div><dt class="text-muted">Asignado a</dt><dd class="font-medium"><%= assignee ? assignee.fullName : 'Sin asignar' %></dd></div>
+    <div><dt class="text-muted">Programado</dt><dd class="font-medium"><%= item.scheduledFor || '-' %></dd></div>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Descripcion</h2>
+    <p class="text-sm"><%= item.description %></p>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Historial</h2>
+    <ol class="space-y-3">
+      <% for (const h of history) { %>
+        <li class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full bg-gold-500 mt-2" aria-hidden="true"></span>
+          <div>
+            <p class="text-sm font-medium"><%= h.from %> &rarr; <%= h.to %></p>
+            <p class="text-xs text-muted"><%= h.at %></p>
+          </div>
+        </li>
+      <% } %>
+    </ol>
+  </section>
+</div>

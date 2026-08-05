@@ -1,0 +1,21 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Biblioteca documental', actions: [{ label: 'Nuevo documento', href: '/app/documentos/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin documentos', description: 'Sube el primer documento.' }) %>
+  <% } else { %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% for (const d of items) { %>
+        <a href="/app/documentos/<%= d.id %>" class="card-tight hover:border-gold-500 transition block">
+          <div class="flex items-center justify-between">
+            <span class="badge-gold"><%= d.category %></span>
+            <span class="<%= d.archivedAt ? 'badge-muted' : 'badge-info' %>"><%= d.archivedAt ? 'Archivado' : d.visibility %></span>
+          </div>
+          <h3 class="font-display text-lg text-navy-900 mt-2"><%= d.title %></h3>
+          <p class="text-sm text-muted"><%= d.description %></p>
+          <p class="text-xs text-muted mt-2"><%= d.publishedAt %></p>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

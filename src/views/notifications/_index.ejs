@@ -1,0 +1,20 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Centro de mensajes', actions: [] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin notificaciones', description: 'Las nuevas alertas apareceran aqui.' }) %>
+  <% } else { %>
+    <ul class="space-y-3">
+      <% for (const n of items) { %>
+        <li class="card-tight flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full <%= n.readAt ? 'bg-muted' : 'bg-gold-500' %> mt-2" aria-hidden="true"></span>
+          <div>
+            <p class="font-medium"><%= n.title %></p>
+            <p class="text-sm text-muted"><%= n.body %></p>
+            <p class="text-xs text-muted mt-1"><%= n.createdAt %></p>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  <% } %>
+</div>

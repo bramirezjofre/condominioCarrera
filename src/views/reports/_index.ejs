@@ -1,0 +1,38 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Indicadores del condominio', actions: [] }) %>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <a href="/app/reportes/financiero" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Financiero</h3>
+      <p class="text-sm text-muted">Estado financiero mensual, recaudacion, gastos.</p>
+    </a>
+    <a href="/app/reportes/recaudacion" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Recaudacion</h3>
+      <p class="text-sm text-muted">Pagos por mes y comparativos.</p>
+    </a>
+    <a href="/app/reportes/morosidad" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Morosidad</h3>
+      <p class="text-sm text-muted">Unidades y torres en mora.</p>
+    </a>
+    <a href="/app/reportes/gastos" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Gastos</h3>
+      <p class="text-sm text-muted">Distribucion por categoria.</p>
+    </a>
+    <a href="/app/reportes/mantenimientos" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Mantenimientos</h3>
+      <p class="text-sm text-muted">Estado, prioridades y tiempos.</p>
+    </a>
+    <a href="/app/reportes/multas" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Multas</h3>
+      <p class="text-sm text-muted">Resumen por estado y torre.</p>
+    </a>
+    <a href="/app/reportes/encomiendas" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Encomiendas</h3>
+      <p class="text-sm text-muted">Pendientes y entregadas.</p>
+    </a>
+    <a href="/app/reportes/reservas" class="card hover:border-gold-500 transition">
+      <h3 class="font-display text-lg text-navy-900">Reservas</h3>
+      <p class="text-sm text-muted">Uso de espacios comunes.</p>
+    </a>
+  </div>
+</div>

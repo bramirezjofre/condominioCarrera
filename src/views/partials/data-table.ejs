@@ -1,0 +1,27 @@
+<% const columns = typeof columns !== 'undefined' ? columns : []; const rows = typeof rows !== 'undefined' ? rows : []; %>
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <% for (const col of columns) { %>
+          <th scope="col" class="<%= col.class || '' %>"><%= col.label %></th>
+        <% } %>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-border">
+      <% for (const row of rows) { %>
+        <tr>
+          <% for (const col of columns) { %>
+            <td class="<%= col.tdClass || '' %>">
+              <% if (col.render) { %>
+                <%- col.render(row) %>
+              <% } else { %>
+                <%= row[col.key] %>
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

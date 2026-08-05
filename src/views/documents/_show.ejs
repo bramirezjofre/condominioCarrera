@@ -1,0 +1,16 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: item.title, subtitleText: item.description || '', actions: [{ label: 'Volver', href: '/app/documentos', class: 'btn-secondary' }] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">Categoria</dt><dd class="font-medium"><%= item.categoryId %></dd></div>
+    <div><dt class="text-muted">Visibilidad</dt><dd class="font-medium"><%= item.visibility %></dd></div>
+    <div><dt class="text-muted">Version</dt><dd class="font-medium"><%= item.version %></dd></div>
+    <div><dt class="text-muted">Tamano</dt><dd class="font-medium"><%= Math.round((item.fileSize || 0) / 1024) %> KB</dd></div>
+    <div><dt class="text-muted">Publicacion</dt><dd class="font-medium"><%= item.publishedAt %></dd></div>
+    <div><dt class="text-muted">Vencimiento</dt><dd class="font-medium"><%= item.expiresAt || '-' %></dd></div>
+  </section>
+
+  <div class="alert alert-info">
+    La descarga se habilitara al integrar el modulo de Storage con Supabase.
+  </div>
+</div>

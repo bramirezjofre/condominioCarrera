@@ -1,0 +1,20 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Listado de condominios registrados', actions: [] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin condominios', description: 'Crea el primer registro desde aqui.' }) %>
+  <% } else { %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% for (const c of items) { %>
+        <a href="/app/condominios/<%= c.id %>" class="card-tight hover:border-gold-500 transition block">
+          <h3 class="font-display text-lg text-navy-900"><%= c.name %></h3>
+          <p class="text-sm text-muted"><%= c.commune %>, <%= c.region %></p>
+          <div class="flex gap-2 mt-3">
+            <span class="badge-navy"><%= c.currency %></span>
+            <span class="badge-gold"><%= c.timezone %></span>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

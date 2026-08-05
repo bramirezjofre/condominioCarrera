@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09264d" />
+  <title><%= title %> | Condominio Jose Miguel Carrera</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/img/logo-jmc.jpg" type="image/jpeg" />
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body class="bg-ivory text-text font-sans min-h-screen flex items-center justify-center px-4 bg-gold-pattern">
+  <div class="card-elevated max-w-md w-full text-center">
+    <img src="/img/logo-jmc.jpg" alt="Condominio Jose Miguel Carrera" class="h-16 mx-auto mb-4" />
+    <h1 class="font-display text-2xl text-navy-900 mb-2">Recuperar acceso</h1>
+    <p class="text-sm text-muted mb-6">Ingresa tu correo y te enviaremos instrucciones.</p>
+    <form method="post" action="#" class="space-y-4 text-left">
+      <div>
+        <label for="email" class="label">Email</label>
+        <input id="email" name="email" type="email" class="input" required />
+      </div>
+      <button type="submit" class="btn-primary w-full">Enviar instrucciones</button>
+    </form>
+    <p class="text-xs text-muted mt-4"><a href="/login" class="text-navy-900 hover:underline">Volver al login</a></p>
+  </div>
+</body>
+</html>

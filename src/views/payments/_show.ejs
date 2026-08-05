@@ -1,0 +1,25 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos del pago', actions: [{ label: 'Volver', href: '/app/pagos', class: 'btn-secondary' }] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">Unidad</dt><dd class="font-medium"><%= unit ? unit.number : '-' %></dd></div>
+    <div><dt class="text-muted">Pagador</dt><dd class="font-medium"><%= person ? person.fullName : '-' %></dd></div>
+    <div><dt class="text-muted">Monto</dt><dd class="font-medium">$ <%= Math.round(item.amount / 1000) %>k</dd></div>
+    <div><dt class="text-muted">Metodo</dt><dd class="font-medium"><%= item.paymentMethod %></dd></div>
+    <div><dt class="text-muted">Fecha</dt><dd class="font-medium"><%= item.paidAt %></dd></div>
+    <div><dt class="text-muted">Referencia</dt><dd class="font-medium"><%= item.reference %></dd></div>
+    <div><dt class="text-muted">Estado</dt><dd class="font-medium"><%= item.status %></dd></div>
+    <div><dt class="text-muted">Verificado por</dt><dd class="font-medium"><%= item.verifiedBy || '-' %></dd></div>
+  </section>
+
+  <div class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Acciones</h2>
+    <div class="flex flex-wrap gap-2">
+      <button class="btn-primary" disabled>Verificar</button>
+      <button class="btn-secondary" disabled>Rechazar</button>
+      <button class="btn-danger" disabled>Reversar</button>
+      <a href="/app/pagos" class="btn-ghost">Volver al listado</a>
+    </div>
+    <p class="text-xs text-muted mt-3">Las acciones se habilitaran al integrar el modulo financiero.</p>
+  </div>
+</div>

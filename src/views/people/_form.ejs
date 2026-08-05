@@ -1,55 +1,38 @@
-<div class="card max-w-xl">
-  <h2 class="text-lg font-semibold text-navy-900 mb-4"><%= title %></h2>
-  <% if (error) { %>
-    <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4 text-sm">
-      <%= error %>
-    </div>
-  <% } %>
-  <form method="post" action="<%= values.id ? '/app/personas/' + values.id : '/app/personas' %>" class="space-y-4">
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label for="firstName" class="block text-sm font-medium mb-1">Nombre</label>
-        <input id="firstName" name="firstName" required value="<%= values.first_name ?? values.firstName ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos personales', actions: [{ label: 'Volver', href: '/app/personas', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="firstName" class="label">Nombre</label>
+          <input id="firstName" name="firstName" class="input" value="<%= item.firstName %>" required />
+        </div>
+        <div>
+          <label for="lastName" class="label">Apellido</label>
+          <input id="lastName" name="lastName" class="input" value="<%= item.lastName %>" required />
+        </div>
+        <div>
+          <label for="nationalId" class="label">RUN / RUT</label>
+          <input id="nationalId" name="nationalId" class="input" value="<%= item.nationalId || '' %>" />
+        </div>
+        <div>
+          <label for="email" class="label">Email</label>
+          <input id="email" name="email" type="email" class="input" value="<%= item.email || '' %>" />
+        </div>
+        <div>
+          <label for="phone" class="label">Telefono</label>
+          <input id="phone" name="phone" class="input" value="<%= item.phone || '' %>" />
+        </div>
+        <div>
+          <label for="birthDate" class="label">Fecha de nacimiento</label>
+          <input id="birthDate" name="birthDate" type="date" class="input" value="<%= item.birthDate || '' %>" />
+        </div>
       </div>
-      <div>
-        <label for="lastName" class="block text-sm font-medium mb-1">Apellido</label>
-        <input id="lastName" name="lastName" required value="<%= values.last_name ?? values.lastName ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/personas" class="btn-secondary">Cancelar</a>
       </div>
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label for="nationalId" class="block text-sm font-medium mb-1">RUN/RUT</label>
-        <input id="nationalId" name="nationalId" value="<%= values.national_id ?? values.nationalId ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-      </div>
-      <div>
-        <label for="email" class="block text-sm font-medium mb-1">Email</label>
-        <input id="email" name="email" type="email" value="<%= values.email ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-      </div>
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label for="phone" class="block text-sm font-medium mb-1">Telefono</label>
-        <input id="phone" name="phone" value="<%= values.phone ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-      </div>
-      <div>
-        <label for="birthDate" class="block text-sm font-medium mb-1">Fecha de nacimiento</label>
-        <input id="birthDate" name="birthDate" type="date" value="<%= values.birth_date ?? values.birthDate ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-      </div>
-    </div>
-    <div>
-      <label for="notes" class="block text-sm font-medium mb-1">Notas</label>
-      <textarea id="notes" name="notes" rows="3"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500"><%= values.notes ?? '' %></textarea>
-    </div>
-    <div class="flex gap-2">
-      <button type="submit" class="btn-primary">Guardar</button>
-      <a href="/app/personas" class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Cancelar</a>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

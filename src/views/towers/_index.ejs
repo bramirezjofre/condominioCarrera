@@ -1,31 +1,31 @@
-<div class="card">
-  <div class="flex items-center justify-between">
-    <h2 class="text-lg font-semibold text-navy-900">Torres</h2>
-    <a href="/app/torres/nuevo" class="btn-primary">Nueva torre</a>
-  </div>
-  <table class="mt-4 w-full text-sm">
-    <thead>
-      <tr class="text-left text-muted">
-        <th class="py-2">Codigo</th>
-        <th>Nombre</th>
-        <th>Pisos</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (towers.length === 0) { %>
-        <tr><td colspan="4" class="py-4 text-muted">Sin torres registradas.</td></tr>
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Vista general de las torres del condominio', actions: [{ label: 'Nueva torre', href: '#', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin torres', description: 'Crea torres para empezar.' }) %>
+  <% } else { %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% for (const t of items) { %>
+        <a href="/app/torres/<%= t.id %>" class="card-tight hover:border-gold-500 transition block">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-display text-lg text-navy-900"><%= t.name %></h3>
+              <p class="text-sm text-muted"><%= t.code %> - <%= t.addressDetail || 'Sin direccion' %></p>
+            </div>
+            <span class="badge-gold"><%= t.unitCount %> unid.</span>
+          </div>
+          <dl class="mt-4 grid grid-cols-2 gap-2 text-sm">
+            <div>
+              <dt class="text-muted">Administrador</dt>
+              <dd class="font-medium"><%= t.adminName %></dd>
+            </div>
+            <div>
+              <dt class="text-muted">Morosidad</dt>
+              <dd class="font-medium"><%= t.delinquencyPercent %>%</dd>
+            </div>
+          </dl>
+        </a>
       <% } %>
-      <% for (const t of towers) { %>
-        <tr class="border-t border-border">
-          <td class="py-2"><%= t.code %></td>
-          <td><%= t.name %></td>
-          <td><%= t.floor_count %></td>
-          <td class="text-right">
-            <a href="/app/torres/<%= t.id %>" class="text-navy-900 hover:underline">Ver</a>
-          </td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
+    </div>
+  <% } %>
 </div>

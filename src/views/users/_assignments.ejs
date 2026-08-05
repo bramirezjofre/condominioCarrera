@@ -1,0 +1,19 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Torres asignadas a este usuario', actions: [{ label: 'Volver', href: '/app/usuarios/' + item.id, class: 'btn-secondary' }] }) %>
+
+  <% if (towers.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin torres', description: 'Asigna una torre para comenzar.' }) %>
+  <% } else { %>
+    <ul class="space-y-3">
+      <% for (const t of towers) { %>
+        <li class="card-tight flex items-center justify-between">
+          <div>
+            <p class="font-medium"><%= t.name %></p>
+            <p class="text-xs text-muted"><%= t.code %></p>
+          </div>
+          <span class="badge-success">Asignada</span>
+        </li>
+      <% } %>
+    </ul>
+  <% } %>
+</div>

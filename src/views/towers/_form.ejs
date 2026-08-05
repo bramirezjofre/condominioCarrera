@@ -1,37 +1,30 @@
-<div class="card max-w-xl">
-  <h2 class="text-lg font-semibold text-navy-900 mb-4"><%= title %></h2>
-  <% if (error) { %>
-    <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4 text-sm">
-      <%= error %>
-    </div>
-  <% } %>
-  <form method="post" action="<%= values.id ? '/app/torres/' + values.id : '/app/torres' %>" class="space-y-4">
-    <% if (!values.id) { %>
-      <input type="hidden" name="condominiumId" value="<%= condominiumId %>" />
-    <% } %>
-    <div>
-      <label for="code" class="block text-sm font-medium mb-1">Codigo</label>
-      <input id="code" name="code" required value="<%= values.code ?? '' %>"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-    </div>
-    <div>
-      <label for="name" class="block text-sm font-medium mb-1">Nombre</label>
-      <input id="name" name="name" required value="<%= values.name ?? '' %>"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-    </div>
-    <div>
-      <label for="floorCount" class="block text-sm font-medium mb-1">Pisos</label>
-      <input id="floorCount" name="floorCount" type="number" min="0" value="<%= values.floor_count ?? values.floorCount ?? 0 %>"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-    </div>
-    <div>
-      <label for="addressDetail" class="block text-sm font-medium mb-1">Detalle direccion</label>
-      <input id="addressDetail" name="addressDetail" value="<%= values.address_detail ?? values.addressDetail ?? '' %>"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-    </div>
-    <div class="flex gap-2">
-      <button type="submit" class="btn-primary">Guardar</button>
-      <a href="/app/torres" class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Cancelar</a>
-    </div>
-  </form>
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Edicion de torre', actions: [{ label: 'Volver', href: '/app/torres', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="name" class="label">Nombre</label>
+          <input id="name" name="name" class="input" value="<%= item.name %>" required />
+        </div>
+        <div>
+          <label for="code" class="label">Codigo</label>
+          <input id="code" name="code" class="input" value="<%= item.code %>" required />
+        </div>
+        <div>
+          <label for="floorCount" class="label">Pisos</label>
+          <input id="floorCount" name="floorCount" type="number" class="input" value="<%= item.floorCount %>" />
+        </div>
+        <div>
+          <label for="addressDetail" class="label">Direccion</label>
+          <input id="addressDetail" name="addressDetail" class="input" value="<%= item.addressDetail || '' %>" />
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/torres" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
 </div>

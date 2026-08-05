@@ -1,0 +1,23 @@
+{
+  "name": "Condominio Jose Miguel Carrera",
+  "short_name": "JMC",
+  "description": "Sistema de administracion del condominio",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#fbfaf7",
+  "theme_color": "#09264d",
+  "icons": [
+    {
+      "src": "/img/logo-jmc.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/logo-jmc.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

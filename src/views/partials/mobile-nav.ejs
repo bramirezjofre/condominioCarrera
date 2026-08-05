@@ -1,0 +1,17 @@
+<%
+  const mobileItems = (typeof MOBILE_NAV !== 'undefined' && MOBILE_NAV) || [];
+  const currentPath = (typeof ACTIVEPATH !== 'undefined' && ACTIVEPATH) || '';
+%>
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-border shadow-elevated" aria-label="Navegacion inferior">
+  <ul class="grid grid-cols-5">
+    <% for (const navItem of mobileItems) { %>
+      <% const isActive = currentPath === navItem.href || (navItem.href !== '/app' && currentPath.startsWith(navItem.href + '/')); %>
+      <li>
+        <a href="<%= navItem.href %>" class="<%= isActive ? 'nav-mobile-link nav-mobile-link-active' : 'nav-mobile-link' %>" aria-current="<%= isActive ? 'page' : 'false' %>">
+          <span class="w-6 h-6 inline-flex items-center justify-center" aria-hidden="true"><%- include('../icons/' + navItem.icon) %></span>
+          <span><%= navItem.label %></span>
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</nav>

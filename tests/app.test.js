@@ -19,7 +19,7 @@ describe('app basics', () => {
     const app = createApp();
     const res = await request(app).get('/login');
     expect(res.status).toBe(200);
-    expect(res.text).toContain('Condominio JMC');
+    expect(res.text).toContain('Ingresar');
   });
 
   it('GET /app without session redirects to /login', async () => {

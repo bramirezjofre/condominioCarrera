@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Listado completo de unidades con deuda', actions: [{ label: 'Volver', href: '/app/morosidad', class: 'btn-secondary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin deudas', description: 'Todas las unidades estan al dia.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Unidad</th>
+            <th>Torre</th>
+            <th>Ocupante</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const u of items) { %>
+            <tr>
+              <td><a class="text-navy-900 hover:underline" href="/app/unidades/<%= u.id %>"><%= u.number %></a></td>
+              <td><%= u.tower ? u.tower.name : '-' %></td>
+              <td><%= u.person ? u.person.fullName : 'Sin ocupante' %></td>
+              <td><span class="badge-warning">$ <%= Math.round(u.balance / 1000) %>k</span></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

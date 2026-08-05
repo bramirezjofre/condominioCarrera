@@ -1,0 +1,44 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Pagos registrados', actions: [{ label: 'Registrar pago', href: '/app/pagos/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin pagos', description: 'Registra el primer pago.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Unidad</th>
+            <th>Pagador</th>
+            <th>Monto</th>
+            <th>Metodo</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const p of items) { %>
+            <tr>
+              <td><%= p.paidAt %></td>
+              <td><%= p.unit ? p.unit.number : '-' %></td>
+              <td><%= p.person ? p.person.fullName : '-' %></td>
+              <td>$ <%= Math.round(p.amount / 1000) %>k</td>
+              <td><%= p.paymentMethod %></td>
+              <td>
+                <% if (p.status === 'verified') { %>
+                  <span class="badge-success">Verificado</span>
+                <% } else if (p.status === 'pending_verification') { %>
+                  <span class="badge-warning">Pendiente</span>
+                <% } else if (p.status === 'rejected') { %>
+                  <span class="badge-danger">Rechazado</span>
+                <% } else { %>
+                  <span class="badge-muted">Reversado</span>
+                <% } %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

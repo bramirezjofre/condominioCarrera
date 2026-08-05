@@ -1,0 +1,15 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: item.title, subtitleText: 'Por ' + author, actions: [{ label: 'Volver', href: '/app/comunicados', class: 'btn-secondary' }] }) %>
+
+  <article class="card prose max-w-none">
+    <p class="text-sm text-muted"><%= item.publishedAt || 'Sin publicar' %></p>
+    <h1 class="font-display text-2xl text-navy-900 mt-2 mb-4"><%= item.title %></h1>
+    <p class="text-base"><%= item.body %></p>
+  </article>
+
+  <div class="card flex flex-wrap gap-2">
+    <button class="btn-primary" disabled>Publicar</button>
+    <button class="btn-secondary" disabled>Programar</button>
+    <button class="btn-danger" disabled>Archivar</button>
+  </div>
+</div>

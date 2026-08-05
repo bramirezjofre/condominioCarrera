@@ -1,0 +1,24 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Espacios disponibles', actions: [{ label: 'Nuevo espacio', href: '/app/espacios-comunes/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin espacios', description: 'Crea el primer espacio comun.' }) %>
+  <% } else { %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% for (const a of items) { %>
+        <a href="/app/espacios-comunes/<%= a.id %>" class="card-tight hover:border-gold-500 transition block">
+          <h3 class="font-display text-lg text-navy-900"><%= a.name %></h3>
+          <p class="text-sm text-muted"><%= a.description %></p>
+          <div class="flex gap-2 mt-3">
+            <span class="badge-navy">Capacidad <%= a.capacity %></span>
+            <% if (a.requiresApproval) { %>
+              <span class="badge-warning">Requiere aprobacion</span>
+            <% } else { %>
+              <span class="badge-success">Libre</span>
+            <% } %>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

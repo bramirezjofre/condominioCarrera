@@ -1,30 +1,79 @@
 <div class="space-y-6">
-  <div class="card">
-    <div class="flex items-center justify-between">
-      <h2 class="text-lg font-semibold text-navy-900"><%= tower.name %> (<%= tower.code %>)</h2>
-      <div class="space-x-2">
-        <a href="/app/torres/<%= tower.id %>/editar" class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Editar</a>
-        <a href="/app/torres/<%= tower.id %>/unidades/nuevo" class="btn-primary">Nueva unidad</a>
+  <%- include('../partials/page-header', { titleText: tower.name, subtitleText: tower.code + ' - ' + (tower.addressDetail || ''), actions: [
+    { label: 'Editar', href: '/app/torres/' + tower.id + '/editar', class: 'btn-secondary' },
+    { label: 'Nueva unidad', href: '/app/torres/' + tower.id + '/unidades/nuevo', class: 'btn-primary' },
+    { label: 'Agregar al equipo', href: '/app/torres/' + tower.id + '/equipo', class: 'btn-gold' }
+  ] }) %>
+
+  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <%- include('../partials/stat-card', { label: 'Unidades', value: units.length }) %>
+    <%- include('../partials/stat-card', { label: 'Pisos', value: tower.floorCount }) %>
+    <%- include('../partials/stat-card', { label: 'Administrador', value: admin ? admin.name : 'Sin asignar' }) %>
+    <%- include('../partials/stat-card', { label: 'Estado', value: tower.active ? 'Activa' : 'Inactiva' }) %>
+  </section>
+
+  <section class="card">
+    <header class="flex items-center justify-between mb-4">
+      <h2 class="font-display text-xl text-navy-900">Administrador principal</h2>
+      <a href="/app/torres/<%= tower.id %>/administrador" class="text-sm text-navy-900 hover:underline">Cambiar</a>
+    </header>
+    <% if (admin) { %>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-gold-600 text-white flex items-center justify-center font-semibold">
+          <%= admin.name.charAt(0).toUpperCase() %>
+        </div>
+        <div>
+          <p class="font-medium"><%= admin.name %></p>
+          <p class="text-sm text-muted"><%= admin.email %></p>
+        </div>
       </div>
-    </div>
-    <dl class="mt-4 grid grid-cols-2 gap-4 text-sm">
-      <div><dt class="text-muted">Pisos</dt><dd><%= tower.floor_count %></dd></div>
-      <div><dt class="text-muted">Detalle</dt><dd><%= tower.address_detail ?? '-' %></dd></div>
-    </dl>
-  </div>
-
-  <div class="card">
-    <h3 class="text-base font-semibold text-navy-900">Administrador principal</h3>
-    <% if (administrator) { %>
-      <p class="mt-2"><%= administrator.full_name %> (<%= administrator.email %>)</p>
     <% } else { %>
-      <p class="mt-2 text-muted">Sin administrador asignado.</p>
+      <p class="text-sm text-muted">Esta torre aun no tiene un administrador asignado.</p>
     <% } %>
-  </div>
+  </section>
 
-  <div id="units" class="card">
-    <h3 class="text-base font-semibold text-navy-900">Unidades</h3>
-    <p class="text-sm text-muted">Use la seccion de unidades para crear o editar.</p>
-    <a href="/app/torres/<%= tower.id %>/unidades" class="text-navy-900 hover:underline text-sm">Ver unidades</a>
-  </div>
+  <section class="card">
+    <header class="flex items-center justify-between mb-4">
+      <h2 class="font-display text-xl text-navy-900">Equipo de la torre</h2>
+      <a href="/app/torres/<%= tower.id %>/equipo" class="text-sm text-navy-900 hover:underline">Ver todos</a>
+    </header>
+    <% if (team.length === 0) { %>
+      <p class="text-sm text-muted">Sin integrantes registrados.</p>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const m of team) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium"><%= m.person ? m.person.fullName : 'Persona' %></p>
+              <p class="text-xs text-muted"><%= m.positionTitle %></p>
+            </div>
+            <span class="<%= m.user ? 'badge-success' : 'badge-muted' %>"><%= m.user ? 'Con usuario' : 'Sin usuario' %></span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <header class="flex items-center justify-between mb-4">
+      <h2 class="font-display text-xl text-navy-900">Unidades</h2>
+      <a href="/app/torres/<%= tower.id %>/unidades" class="text-sm text-navy-900 hover:underline">Ver todas</a>
+    </header>
+    <% if (units.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin unidades', description: 'Crea departamentos para esta torre.' }) %>
+    <% } else { %>
+      <% const preview = units.slice(0, 6); %>
+      <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <% for (const u of preview) { %>
+          <a href="/app/unidades/<%= u.id %>" class="card-tight hover:border-gold-500 transition block">
+            <div class="flex justify-between items-center">
+              <span class="font-display text-lg text-navy-900"><%= u.number %></span>
+              <span class="badge-navy">Piso <%= u.floor || '-' %></span>
+            </div>
+            <p class="text-sm text-muted"><%= u.kind %></p>
+          </a>
+        <% } %>
+      </div>
+    <% } %>
+  </section>
 </div>

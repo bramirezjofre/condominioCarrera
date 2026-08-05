@@ -1,32 +1,49 @@
-<div class="card">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-semibold text-navy-900">Personas</h2>
-    <a href="/app/personas/nuevo" class="btn-primary">Nueva persona</a>
-  </div>
-  <form method="get" action="/app/personas" class="mb-4 flex gap-2">
-    <input name="search" value="<%= search %>" placeholder="Buscar..."
-      class="flex-1 border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-    <button class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Buscar</button>
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Listado de personas del condominio', actions: [{ label: 'Nueva persona', href: '/app/personas/nuevo', class: 'btn-primary' }] }) %>
+
+  <form method="get" action="/app/personas" class="card-tight flex gap-2">
+    <input class="input flex-1" type="search" name="search" value="<%= search %>" placeholder="Buscar por nombre o email" aria-label="Buscar" />
+    <button type="submit" class="btn-primary">Buscar</button>
   </form>
-  <table class="w-full text-sm">
-    <thead>
-      <tr class="text-left text-muted">
-        <th class="py-2">Nombre</th>
-        <th>Email</th>
-        <th>Telefono</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (people.length === 0) { %>
-        <tr><td colspan="3" class="py-4 text-muted">Sin personas registradas.</td></tr>
-      <% } %>
-      <% for (const p of people) { %>
-        <tr class="border-t border-border">
-          <td class="py-2"><a href="/app/personas/<%= p.id %>" class="text-navy-900 hover:underline"><%= p.full_name %></a></td>
-          <td><%= p.email ?? '-' %></td>
-          <td><%= p.phone ?? '-' %></td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin personas', description: 'Agrega la primera persona del condominio.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Unidades</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const p of items) { %>
+            <tr>
+              <td>
+                <a href="/app/personas/<%= p.id %>" class="font-medium text-navy-900 hover:underline"><%= p.fullName %></a>
+              </td>
+              <td><%= p.email || '-' %></td>
+              <td><%= p.phone || '-' %></td>
+              <td>
+                <% if (p.units.length === 0) { %>
+                  <span class="badge-muted">Sin unidad</span>
+                <% } else { %>
+                  <% for (const u of p.units) { %>
+                    <span class="badge-navy"><%= u.number %></span>
+                  <% } %>
+                <% } %>
+              </td>
+              <td class="text-right">
+                <a href="/app/personas/<%= p.id %>/editar" class="text-sm text-navy-900 hover:underline">Editar</a>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
 </div>

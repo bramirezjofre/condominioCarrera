@@ -1,0 +1,40 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Usuarios del sistema', actions: [{ label: 'Nuevo usuario', href: '/app/usuarios/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin usuarios', description: 'Crea el primer usuario.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Torres</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const u of items) { %>
+            <tr>
+              <td><a href="/app/usuarios/<%= u.id %>" class="text-navy-900 hover:underline"><%= u.person ? u.person.fullName : u.username %></a></td>
+              <td><%= u.username %></td>
+              <td><%= u.email %></td>
+              <td><%= u.roleCodes?.join(', ') %></td>
+              <td><%= u.towers.map(t => t.name).join(', ') || '-' %></td>
+              <td>
+                <% if (u.status === 'active') { %>
+                  <span class="badge-success">Activo</span>
+                <% } else { %>
+                  <span class="badge-muted"><%= u.status %></span>
+                <% } %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

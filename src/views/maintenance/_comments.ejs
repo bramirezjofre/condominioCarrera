@@ -1,0 +1,26 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Comunicacion del equipo', actions: [{ label: 'Volver', href: '/app/mantenimientos/' + item.id, class: 'btn-secondary' }] }) %>
+
+  <% if (comments.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin comentarios', description: 'Anade un comentario publico o interno.' }) %>
+  <% } else { %>
+    <ul class="space-y-3">
+      <% for (const c of comments) { %>
+        <li class="card-tight">
+          <p class="text-sm"><%= c.message %></p>
+          <p class="text-xs text-muted"><%= c.author %> - <%= c.createdAt %></p>
+        </li>
+      <% } %>
+    </ul>
+  <% } %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-3">
+      <textarea class="textarea" name="message" placeholder="Escribe un comentario" required></textarea>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" name="isInternal" /> Comentario interno
+      </label>
+      <button type="submit" class="btn-primary">Publicar</button>
+    </form>
+  </div>
+</div>

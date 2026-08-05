@@ -13,5 +13,21 @@ export default [
       'no-undef': 'error',
       'no-console': 'off'
     }
+  },
+  {
+    files: ['src/public/js/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'script',
+      globals: { document: 'readonly', window: 'readonly', fetch: 'readonly', console: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly', confirm: 'readonly' }
+    }
+  },
+  {
+    files: ['src/public/service-worker.js'],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'script',
+      globals: { self: 'readonly', caches: 'readonly', clients: 'readonly', fetch: 'readonly', Request: 'readonly', Response: 'readonly' }
+    }
   }
 ];

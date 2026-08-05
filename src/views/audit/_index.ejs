@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Bitacora de operaciones', actions: [] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin eventos', description: 'La bitacora se llenara a medida que se registren operaciones.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Actor</th>
+            <th>Accion</th>
+            <th>Entidad</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const a of items) { %>
+            <tr>
+              <td><%= a.createdAt %></td>
+              <td><%= a.actor %></td>
+              <td><span class="chip"><%= a.action %></span></td>
+              <td><%= a.entityType %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

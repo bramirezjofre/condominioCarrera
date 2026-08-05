@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Avisos a la comunidad', actions: [{ label: 'Nuevo comunicado', href: '/app/comunicados/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin comunicados', description: 'Crea el primer aviso.' }) %>
+  <% } else { %>
+    <ul class="space-y-3">
+      <% for (const a of items) { %>
+        <li>
+          <a href="/app/comunicados/<%= a.id %>" class="card-tight hover:border-gold-500 transition block">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display text-lg text-navy-900"><%= a.title %></h3>
+              <% if (a.status === 'published') { %>
+                <span class="badge-success">Publicado</span>
+              <% } else if (a.status === 'scheduled') { %>
+                <span class="badge-warning">Programado</span>
+              <% } else if (a.status === 'archived') { %>
+                <span class="badge-muted">Archivado</span>
+              <% } else { %>
+                <span class="badge-muted">Borrador</span>
+              <% } %>
+            </div>
+            <p class="text-sm text-muted"><%= a.body %></p>
+            <p class="text-xs text-muted mt-2"><%= a.publishedAt || 'Sin publicar' %></p>
+          </a>
+        </li>
+      <% } %>
+    </ul>
+  <% } %>
+</div>

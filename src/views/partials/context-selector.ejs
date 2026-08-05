@@ -1,0 +1,8 @@
+<div class="card-tight flex items-center gap-3">
+  <label class="text-xs text-muted" for="contextSelector">Contexto</label>
+  <select id="contextSelector" class="select py-1 text-sm" onchange="if(this.value){window.location.href=this.value}">
+    <% for (const opt of options) { %>
+      <option value="<%= opt.href %>" <%= opt.value === current ? 'selected' : '' %>><%= opt.label %></option>
+    <% } %>
+  </select>
+</div>

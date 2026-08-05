@@ -1,0 +1,29 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Integrantes del equipo', actions: [{ label: 'Volver', href: '/app/torres/' + tower.id, class: 'btn-secondary' }] }) %>
+  <% if (team.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin integrantes', description: 'Agrega al primer integrante desde el panel del administrador general.' }) %>
+  <% } else { %>
+    <div class="card overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Persona</th>
+            <th>Cargo</th>
+            <th>Desde</th>
+            <th>Acceso</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const m of team) { %>
+            <tr>
+              <td><%= m.person ? m.person.fullName : 'Sin persona' %></td>
+              <td><%= m.positionTitle %></td>
+              <td><%= m.startsOn %></td>
+              <td><span class="<%= m.user ? 'badge-success' : 'badge-muted' %>"><%= m.user ? 'Con usuario' : 'Sin usuario' %></span></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

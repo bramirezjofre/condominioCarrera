@@ -4,19 +4,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import pinoHttp from 'pino-http';
 
-import { isProduction } from './config/env.js';
+import { isProduction, env } from './config/env.js';
 import { logger } from './config/logger.js';
 import { sessionMiddleware } from './config/session.js';
 import { pingDatabase } from './db/health.js';
 import { requestId } from './middleware/request-id.js';
 import { authRoutes } from './modules/auth/auth.routes.js';
 import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js';
-import { condominiumsRoutes } from './modules/condominiums/condominiums.routes.js';
-import { towersRoutes } from './modules/towers/towers.routes.js';
-import { unitsRoutes } from './modules/units/units.routes.js';
-import { peopleRoutes } from './modules/people/people.routes.js';
-import { occupanciesRoutes } from './modules/occupancies/occupancies.routes.js';
+import { demoRoutes } from './modules/demo/demo.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
+import { NAV_GROUPS, MOBILE_NAV, breadcrumbsFor } from './shared/navigation.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +24,16 @@ export function createApp() {
   app.set('trust proxy', 1);
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, 'views'));
+
+  app.use((req, res, next) => {
+    res.locals.user = req.session?.user ?? {};
+    res.locals.NAV_GROUPS = NAV_GROUPS;
+    res.locals.MOBILE_NAV = MOBILE_NAV;
+    res.locals.ACTIVEPATH = req.path;
+    res.locals.crumbs = breadcrumbsFor(req.path);
+    res.locals.isDemoBanner = env.DATA_MODE === 'demo';
+    next();
+  });
 
   app.use(requestId);
   app.use(
@@ -64,11 +71,7 @@ export function createApp() {
 
   app.use(authRoutes);
   app.use(dashboardRoutes);
-  app.use(condominiumsRoutes);
-  app.use(towersRoutes);
-  app.use(unitsRoutes);
-  app.use(peopleRoutes);
-  app.use(occupanciesRoutes);
+  app.use(demoRoutes);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

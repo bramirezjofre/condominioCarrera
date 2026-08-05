@@ -3,15 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %> | Condominio JMC</title>
+  <meta name="theme-color" content="#09264d" />
+  <title><%= title %> | Condominio Jose Miguel Carrera</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/img/logo-jmc.jpg" type="image/jpeg" />
   <link rel="stylesheet" href="/css/app.css" />
 </head>
-<body class="bg-app text-app min-h-screen flex flex-col">
-  <main class="flex-1 flex items-center justify-center px-4 py-12">
-    <%- include('_card') %>
+<body class="bg-ivory text-text font-sans min-h-screen flex flex-col bg-gold-pattern">
+  <a href="#mainContent" class="skip-link">Saltar al contenido</a>
+  <header class="px-6 py-6 md:px-10 md:py-8 flex items-center justify-center">
+    <a href="/login" class="inline-flex items-center gap-4">
+      <img src="/img/logo-jmc.jpg" alt="Condominio Jose Miguel Carrera" class="h-16 md:h-20 w-auto" />
+    </a>
+  </header>
+  <main id="mainContent" class="flex-1 flex items-center justify-center px-4 pb-8">
+    <div class="w-full max-w-md">
+      <%- include('../partials/demo-banner') %>
+      <div class="card-elevated">
+        <%- include('_card') %>
+      </div>
+    </div>
   </main>
   <footer class="text-center text-xs text-muted py-4">
-    &copy; <%= new Date().getFullYear() %> Condominio Jose Miguel Carrera
+    <span class="font-display text-sm">Condominio Jose Miguel Carrera</span>
+    &middot; Tu hogar, tu comunidad, tu tranquilidad
   </footer>
+  <script src="/js/app.js" defer></script>
 </body>
 </html>

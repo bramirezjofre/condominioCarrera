@@ -1,0 +1,73 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: 'Unidad ' + unit.number, subtitleText: tower.name + ' - Piso ' + unit.floor, actions: [
+    { label: 'Editar', href: '/app/unidades/' + unit.id + '/editar', class: 'btn-secondary' },
+    { label: 'Ocupaciones', href: '/app/unidades/' + unit.id + '/ocupaciones', class: 'btn-primary' },
+    { label: 'Estado de cuenta', href: '/app/morosidad/unidades', class: 'btn-gold' }
+  ] }) %>
+
+  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <%- include('../partials/stat-card', { label: 'Tipo', value: unit.kind }) %>
+    <%- include('../partials/stat-card', { label: 'Prorrateo', value: unit.prorationFactor }) %>
+    <%- include('../partials/stat-card', { label: 'Area', value: (unit.areaM2 || 0) + ' m2' }) %>
+    <%- include('../partials/stat-card', { label: 'Saldo', value: '$ ' + Math.round(balance / 1000) + 'k' }) %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Ocupantes</h2>
+    <% if (occupancies.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin ocupantes', description: 'Agrega un ocupante principal para esta unidad.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const o of occupancies) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium"><%= o.person ? o.person.fullName : 'Sin persona' %></p>
+              <p class="text-xs text-muted"><%= o.occupancyType %> - Desde <%= o.startsOn %></p>
+            </div>
+            <span class="<%= o.isPrimary ? 'badge-gold' : 'badge-muted' %>"><%= o.isPrimary ? 'Principal' : 'Secundaria' %></span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Cargos recientes</h2>
+    <% if (charges.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin cargos', description: 'Los cargos mensuales apareceran aqui.' }) %>
+    <% } else { %>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Periodo</th>
+              <th>Total</th>
+              <th>Pagado</th>
+              <th>Saldo</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border">
+            <% for (const c of charges.slice(0, 12)) { %>
+              <tr>
+                <td><%= c.dueDate %></td>
+                <td>$ <%= Math.round(c.totalAmount / 1000) %>k</td>
+                <td>$ <%= Math.round(c.paidAmount / 1000) %>k</td>
+                <td>$ <%= Math.round(c.balanceAmount / 1000) %>k</td>
+                <td>
+                  <% if (c.status === 'paid') { %>
+                    <span class="badge-success">Pagado</span>
+                  <% } else if (c.status === 'overdue') { %>
+                    <span class="badge-danger">Vencido</span>
+                  <% } else { %>
+                    <span class="badge-warning">Pendiente</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </section>
+</div>

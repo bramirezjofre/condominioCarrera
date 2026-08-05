@@ -1,0 +1,26 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Disponibilidad semanal', actions: [{ label: 'Volver', href: '/app/espacios-comunes/' + item.id, class: 'btn-secondary' }] }) %>
+
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Dia</th>
+          <th>Apertura</th>
+          <th>Cierre</th>
+          <th>Duracion</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        <% for (const d of ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo']) { %>
+          <tr>
+            <td><%= d %></td>
+            <td><input type="time" class="input" value="08:00" /></td>
+            <td><input type="time" class="input" value="22:00" /></td>
+            <td>60 min</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

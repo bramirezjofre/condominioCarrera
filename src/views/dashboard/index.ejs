@@ -3,45 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %> | Condominio JMC</title>
+  <meta name="theme-color" content="#09264d" />
+  <title><%= title %> | Condominio Jose Miguel Carrera</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/img/logo-jmc.jpg" type="image/jpeg" />
   <link rel="stylesheet" href="/css/app.css" />
 </head>
-<body class="bg-app text-app min-h-screen">
+<body class="bg-ivory text-text font-sans">
+  <a href="#mainContent" class="skip-link">Saltar al contenido</a>
   <div class="flex min-h-screen">
-    <aside class="hidden md:flex md:flex-col w-64 bg-navy-900 text-white p-4">
-      <div class="text-lg font-bold mb-6">
-        <span class="text-gold-500">JMC</span> Condominio
-      </div>
-      <nav class="flex-1 space-y-1">
-        <a href="/app" class="block px-3 py-2 rounded hover:bg-navy-800">Panel principal</a>
-        <a href="/app/torres" class="block px-3 py-2 rounded hover:bg-navy-800">Torres</a>
-        <a href="/app/personas" class="block px-3 py-2 rounded hover:bg-navy-800">Personas</a>
-        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Gastos comunes</a>
-        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Pagos</a>
-        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Multas</a>
-        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Mantenimientos</a>
-        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Encomiendas</a>
-        <a href="#" class="block px-3 py-2 rounded hover:bg-navy-800 opacity-60 cursor-not-allowed">Comunicados</a>
-      </nav>
-      <form method="post" action="/logout" class="mt-4">
-        <button type="submit" class="w-full bg-gold-600 hover:bg-gold-500 text-white px-3 py-2 rounded">
-          Cerrar sesion
-        </button>
-      </form>
-    </aside>
-
-    <div class="flex-1 flex flex-col">
-      <header class="bg-white border-b border-border px-4 md:px-8 py-3 flex items-center justify-between">
-        <h1 class="text-lg font-semibold text-navy-900"><%= title %></h1>
-        <div class="text-sm text-muted">
-          <%= user.fullName %> &middot; <%= user.isCondominiumAdmin ? 'Admin. general' : 'Usuario' %>
+    <%- include('../partials/sidebar') %>
+    <div class="flex-1 flex flex-col min-w-0">
+      <%- include('../partials/mobile-header') %>
+      <main id="mainContent" class="flex-1 px-4 md:px-8 py-6 bg-ivory">
+        <div class="mx-auto max-w-7xl">
+          <%- include('../partials/demo-banner') %>
+          <% if (typeof crumbs !== 'undefined' && crumbs && crumbs.length > 1) { %>
+            <%- include('../partials/breadcrumbs') %>
+          <% } %>
+          <%- include('_content') %>
         </div>
-      </header>
-
-      <main class="p-4 md:p-8 flex-1">
-        <%- include('_content') %>
       </main>
+      <%- include('../partials/mobile-nav') %>
     </div>
   </div>
+  <script src="/js/app.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Historial de unidades de la persona', actions: [{ label: 'Volver', href: '/app/personas/' + person.id, class: 'btn-secondary' }] }) %>
+
+  <% if (occupancies.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin ocupaciones', description: 'Esta persona no registra ocupaciones.' }) %>
+  <% } else { %>
+    <div class="card table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Unidad</th>
+            <th>Torre</th>
+            <th>Tipo</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const o of occupancies) { %>
+            <tr>
+              <td><%= o.unit ? o.unit.number : '-' %></td>
+              <td><%= o.tower ? o.tower.name : '-' %></td>
+              <td><%= o.occupancyType %></td>
+              <td><%= o.startsOn %></td>
+              <td><%= o.endsOn || 'Vigente' %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

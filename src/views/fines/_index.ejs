@@ -1,0 +1,46 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Multas registradas', actions: [{ label: 'Nueva multa', href: '/app/multas/nueva', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin multas', description: 'Registra la primera multa.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Unidad</th>
+            <th>Persona</th>
+            <th>Motivo</th>
+            <th>Monto</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const f of items) { %>
+            <tr>
+              <td><%= f.incidentAt %></td>
+              <td><%= f.unit ? f.unit.number : '-' %></td>
+              <td><%= f.person ? f.person.fullName : '-' %></td>
+              <td><%= f.reason %></td>
+              <td>$ <%= Math.round(f.amount / 1000) %>k</td>
+              <td>
+                <% if (f.status === 'paid') { %>
+                  <span class="badge-success">Pagada</span>
+                <% } else if (f.status === 'void') { %>
+                  <span class="badge-muted">Anulada</span>
+                <% } else if (f.status === 'appealed') { %>
+                  <span class="badge-warning">Apelada</span>
+                <% } else if (f.status === 'confirmed') { %>
+                  <span class="badge-info">Confirmada</span>
+                <% } else { %>
+                  <span class="badge-muted"><%= f.status %></span>
+                <% } %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

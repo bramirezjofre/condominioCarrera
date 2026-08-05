@@ -1,0 +1,38 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Crear un aviso', actions: [{ label: 'Volver', href: '/app/comunicados', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="title" class="label">Titulo</label>
+          <input id="title" name="title" class="input" required />
+        </div>
+        <div>
+          <label for="priority" class="label">Prioridad</label>
+          <select id="priority" name="priority" class="select">
+            <% for (const p of ['low','normal','high','urgent']) { %>
+              <option value="<%= p %>" <%= item.priority === p ? 'selected' : '' %>><%= p %></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <label for="body" class="label">Contenido</label>
+          <textarea id="body" name="body" class="textarea" required></textarea>
+        </div>
+        <div>
+          <label for="publishedAt" class="label">Publicacion</label>
+          <input id="publishedAt" name="publishedAt" type="date" class="input" />
+        </div>
+        <div>
+          <label for="expiresAt" class="label">Vencimiento</label>
+          <input id="expiresAt" name="expiresAt" type="date" class="input" />
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/comunicados" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

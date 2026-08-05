@@ -1,0 +1,10 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: item.name, subtitleText: item.description || '', actions: [{ label: 'Ver horarios', href: '/app/espacios-comunes/' + item.id + '/horarios', class: 'btn-secondary' }, { label: 'Reservar', href: '/app/reservas/nueva', class: 'btn-primary' }] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">Capacidad</dt><dd class="font-medium"><%= item.capacity %></dd></div>
+    <div><dt class="text-muted">Requiere aprobacion</dt><dd class="font-medium"><%= item.requiresApproval ? 'Si' : 'No' %></dd></div>
+    <div><dt class="text-muted">Tarifa</dt><dd class="font-medium">$ <%= Math.round((item.price || 0) / 1000) %>k</dd></div>
+    <div><dt class="text-muted">Deposito</dt><dd class="font-medium">$ <%= Math.round((item.depositAmount || 0) / 1000) %>k</dd></div>
+  </section>
+</div>

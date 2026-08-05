@@ -1,0 +1,15 @@
+<% const userData = (typeof user !== 'undefined' && user) || {}; %>
+<header class="lg:hidden bg-navy-900 text-white sticky top-0 z-30">
+  <div class="flex items-center justify-between px-4 py-3">
+    <button type="button" data-mobile-menu-toggle class="p-1 -ml-1 text-white" aria-label="Abrir menu">
+      <span class="w-6 h-6 inline-flex items-center justify-center"><%- include('../icons/menu') %></span>
+    </button>
+    <a href="/app" class="flex items-center gap-2">
+      <img src="/img/logo-jmc.jpg" alt="Condominio JMC" class="h-8 w-auto" />
+      <span class="font-display text-base">JMC</span>
+    </a>
+    <a href="/app/mi-cuenta" class="p-1 -mr-1 text-white" aria-label="Mi cuenta">
+      <span class="w-6 h-6 inline-flex items-center justify-center"><%- include('../icons/user') %></span>
+    </a>
+  </div>
+</header>

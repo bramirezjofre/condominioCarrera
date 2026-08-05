@@ -1,0 +1,48 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Recepcion de encomienda', actions: [{ label: 'Volver', href: '/app/encomiendas', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="unitId" class="label">Unidad</label>
+          <select id="unitId" name="unitId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const u of units) { %>
+              <option value="<%= u.id %>"><%= u.number %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="recipientPersonId" class="label">Destinatario</label>
+          <select id="recipientPersonId" name="recipientPersonId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const p of people) { %>
+              <option value="<%= p.id %>"><%= p.fullName %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="carrier" class="label">Transportista</label>
+          <select id="carrier" name="carrier" class="select">
+            <% for (const c of ['Starken','Chilexpress','Blue Express','MercadoEnvios']) { %>
+              <option value="<%= c %>" <%= item.carrier === c ? 'selected' : '' %>><%= c %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="trackingNumber" class="label">Tracking</label>
+          <input id="trackingNumber" name="trackingNumber" class="input" value="<%= item.trackingNumber || '' %>" />
+        </div>
+        <div class="md:col-span-2">
+          <label for="description" class="label">Descripcion</label>
+          <textarea id="description" name="description" class="textarea"><%= item.description || '' %></textarea>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Registrar</button>
+        <a href="/app/encomiendas" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

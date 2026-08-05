@@ -1,0 +1,34 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Edicion de periodo', actions: [{ label: 'Volver', href: '/app/gastos-comunes', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="month" class="label">Mes</label>
+          <select id="month" name="month" class="select">
+            <% for (const m of ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']) { %>
+              <option value="<%= m %>" <%= item.monthName === m ? 'selected' : '' %>><%= m %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="year" class="label">Ano</label>
+          <input id="year" name="year" type="number" class="input" value="<%= item.year || 2026 %>" />
+        </div>
+        <div>
+          <label for="dueDate" class="label">Vencimiento</label>
+          <input id="dueDate" name="dueDate" type="date" class="input" value="<%= item.dueDate || '' %>" />
+        </div>
+        <div>
+          <label for="totalAmount" class="label">Monto total</label>
+          <input id="totalAmount" name="totalAmount" type="number" class="input" value="<%= item.totalAmount || '' %>" />
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/gastos-comunes" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Detalle de reserva', actions: [{ label: 'Volver', href: '/app/reservas', class: 'btn-secondary' }] }) %>
+
+  <section class="card grid gap-4 md:grid-cols-2">
+    <div><dt class="text-muted">Espacio</dt><dd class="font-medium"><%= amenity ? amenity.name : '-' %></dd></div>
+    <div><dt class="text-muted">Unidad</dt><dd class="font-medium"><%= unit ? unit.number : '-' %></dd></div>
+    <div><dt class="text-muted">Solicitante</dt><dd class="font-medium"><%= person ? person.fullName : '-' %></dd></div>
+    <div><dt class="text-muted">Asistentes</dt><dd class="font-medium"><%= item.attendeeCount %></dd></div>
+    <div><dt class="text-muted">Inicio</dt><dd class="font-medium"><%= item.startsAt %></dd></div>
+    <div><dt class="text-muted">Fin</dt><dd class="font-medium"><%= item.endsAt %></dd></div>
+    <div><dt class="text-muted">Estado</dt><dd class="font-medium"><%= item.status %></dd></div>
+    <div><dt class="text-muted">Motivo rechazo</dt><dd class="font-medium"><%= item.rejectionReason || '-' %></dd></div>
+  </section>
+
+  <div class="card flex flex-wrap gap-2">
+    <button class="btn-primary" disabled>Aprobar</button>
+    <button class="btn-danger" disabled>Rechazar</button>
+    <button class="btn-secondary" disabled>Cancelar</button>
+  </div>
+</div>

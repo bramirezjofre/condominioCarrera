@@ -1,56 +1,46 @@
-<div class="card max-w-xl">
-  <h2 class="text-lg font-semibold text-navy-900 mb-4"><%= title %></h2>
-  <% if (error) { %>
-    <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4 text-sm">
-      <%= error %>
-    </div>
-  <% } %>
-  <form method="post" action="/app/unidades/<%= unit.id %>/ocupaciones" class="space-y-4">
-    <div>
-      <label for="personId" class="block text-sm font-medium mb-1">Persona (UUID)</label>
-      <input id="personId" name="personId" required value="<%= values.personId ?? '' %>"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-      <p class="text-xs text-muted mt-1">Por ahora ingrese el UUID. UI de busqueda se agrega despues.</p>
-    </div>
-    <div class="grid grid-cols-2 gap-4">
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Asignar ocupante a la unidad', actions: [{ label: 'Volver', href: '/app/unidades/' + unit.id + '/ocupaciones', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
       <div>
-        <label for="occupancyType" class="block text-sm font-medium mb-1">Tipo</label>
-        <select id="occupancyType" name="occupancyType" class="w-full border border-border rounded px-3 py-2">
-          <% for (const k of ['owner','tenant','resident','authorized']) { %>
-            <option value="<%= k %>" <%= values.occupancyType === k ? 'selected' : '' %>><%= k %></option>
+        <label for="personId" class="label">Persona</label>
+        <select id="personId" name="personId" class="select" required>
+          <option value="">Seleccionar...</option>
+          <% for (const p of people) { %>
+            <option value="<%= p.id %>"><%= p.fullName %></option>
           <% } %>
         </select>
       </div>
-      <div>
-        <label for="startsOn" class="block text-sm font-medium mb-1">Desde</label>
-        <input id="startsOn" name="startsOn" type="date" required value="<%= values.startsOn ?? '' %>"
-          class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="occupancyType" class="label">Tipo</label>
+          <select id="occupancyType" name="occupancyType" class="select">
+            <% for (const k of ['owner','tenant','resident','authorized']) { %>
+              <option value="<%= k %>" <%= item.occupancyType === k ? 'selected' : '' %>><%= k %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="startsOn" class="label">Desde</label>
+          <input id="startsOn" name="startsOn" type="date" class="input" value="<%= item.startsOn %>" required />
+        </div>
       </div>
-    </div>
-    <div>
-      <label for="endsOn" class="block text-sm font-medium mb-1">Hasta (opcional)</label>
-      <input id="endsOn" name="endsOn" type="date" value="<%= values.endsOn ?? '' %>"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500" />
-    </div>
-    <div class="flex items-center gap-4">
-      <label class="flex items-center gap-2 text-sm">
-        <input type="checkbox" name="isPrimary" <%= values.isPrimary ? 'checked' : '' %> /> Principal
-      </label>
-      <label class="flex items-center gap-2 text-sm">
-        <input type="checkbox" name="receivesBilling" <%= values.receivesBilling ? 'checked' : '' %> /> Recibe cobranza
-      </label>
-      <label class="flex items-center gap-2 text-sm">
-        <input type="checkbox" name="receivesNotifications" <%= values.receivesNotifications ? 'checked' : '' %> /> Recibe avisos
-      </label>
-    </div>
-    <div>
-      <label for="notes" class="block text-sm font-medium mb-1">Notas</label>
-      <textarea id="notes" name="notes" rows="2"
-        class="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-500"><%= values.notes ?? '' %></textarea>
-    </div>
-    <div class="flex gap-2">
-      <button type="submit" class="btn-primary">Guardar</button>
-      <a href="/app/unidades/<%= unit.id %>/ocupaciones" class="btn bg-gray-100 hover:bg-gray-200 text-navy-900">Cancelar</a>
-    </div>
-  </form>
+      <div class="flex items-center gap-4">
+        <label class="flex items-center gap-2 text-sm">
+          <input type="checkbox" name="isPrimary" <%= item.isPrimary ? 'checked' : '' %> /> Principal
+        </label>
+        <label class="flex items-center gap-2 text-sm">
+          <input type="checkbox" name="receivesBilling" checked /> Recibe cobranza
+        </label>
+        <label class="flex items-center gap-2 text-sm">
+          <input type="checkbox" name="receivesNotifications" checked /> Recibe avisos
+        </label>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/unidades/<%= unit.id %>/ocupaciones" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
 </div>

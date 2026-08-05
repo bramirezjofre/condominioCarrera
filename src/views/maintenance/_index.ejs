@@ -1,0 +1,21 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Solicitudes de mantenimiento', actions: [{ label: 'Nueva solicitud', href: '/app/mantenimientos/nuevo', class: 'btn-primary' }] }) %>
+
+  <% if (items.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin solicitudes', description: 'Crea la primera solicitud.' }) %>
+  <% } else { %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% for (const m of items) { %>
+        <a href="/app/mantenimientos/<%= m.id %>" class="card-tight hover:border-gold-500 transition block">
+          <div class="flex items-center justify-between">
+            <span class="<%= m.priority === 'urgent' ? 'badge-danger' : m.priority === 'high' ? 'badge-warning' : 'badge-muted' %>"><%= m.priority %></span>
+            <span class="<%= m.status === 'completed' ? 'badge-success' : m.status === 'cancelled' ? 'badge-muted' : 'badge-info' %>"><%= m.status %></span>
+          </div>
+          <h3 class="font-display text-lg text-navy-900 mt-2"><%= m.title %></h3>
+          <p class="text-sm text-muted"><%= m.tower ? m.tower.name : '' %> - <%= m.unit ? m.unit.number : '' %></p>
+          <p class="text-xs text-muted mt-2"><%= m.description %></p>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

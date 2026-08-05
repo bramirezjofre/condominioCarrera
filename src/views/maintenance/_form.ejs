@@ -1,0 +1,51 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Detalles de la solicitud', actions: [{ label: 'Volver', href: '/app/mantenimientos', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="unitId" class="label">Unidad</label>
+          <select id="unitId" name="unitId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const u of units) { %>
+              <option value="<%= u.id %>" <%= item.unitId === u.id ? 'selected' : '' %>><%= u.number %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="category" class="label">Categoria</label>
+          <select id="category" name="category" class="select">
+            <% for (const c of ['ascensores','gasfiteria','electricidad','pintura','limpieza']) { %>
+              <option value="<%= c %>" <%= item.category === c ? 'selected' : '' %>><%= c %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="priority" class="label">Prioridad</label>
+          <select id="priority" name="priority" class="select">
+            <% for (const p of ['low','normal','high','urgent']) { %>
+              <option value="<%= p %>" <%= item.priority === p ? 'selected' : '' %>><%= p %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="scheduledFor" class="label">Programado</label>
+          <input id="scheduledFor" name="scheduledFor" type="date" class="input" value="<%= item.scheduledFor || '' %>" />
+        </div>
+        <div class="md:col-span-2">
+          <label for="title" class="label">Titulo</label>
+          <input id="title" name="title" class="input" value="<%= item.title %>" required />
+        </div>
+        <div class="md:col-span-2">
+          <label for="description" class="label">Descripcion</label>
+          <textarea id="description" name="description" class="textarea"><%= item.description %></textarea>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/app/mantenimientos" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Carga un nuevo pago', actions: [{ label: 'Volver', href: '/app/pagos', class: 'btn-secondary' }] }) %>
+
+  <div class="card">
+    <form method="post" action="#" class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="unitId" class="label">Unidad</label>
+          <select id="unitId" name="unitId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const u of units) { %>
+              <option value="<%= u.id %>"><%= u.number %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="payerPersonId" class="label">Pagador</label>
+          <select id="payerPersonId" name="payerPersonId" class="select" required>
+            <option value="">Seleccionar...</option>
+            <% for (const p of people) { %>
+              <option value="<%= p.id %>"><%= p.fullName %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="amount" class="label">Monto</label>
+          <input id="amount" name="amount" type="number" class="input" required />
+        </div>
+        <div>
+          <label for="paymentMethod" class="label">Metodo</label>
+          <select id="paymentMethod" name="paymentMethod" class="select">
+            <% for (const m of ['transfer','cash','check']) { %>
+              <option value="<%= m %>" <%= item.paymentMethod === m ? 'selected' : '' %>><%= m %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label for="paidAt" class="label">Fecha</label>
+          <input id="paidAt" name="paidAt" type="date" class="input" value="<%= item.paidAt %>" />
+        </div>
+        <div>
+          <label for="reference" class="label">Referencia</label>
+          <input id="reference" name="reference" class="input" />
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary">Registrar</button>
+        <a href="/app/pagos" class="btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
