@@ -11,8 +11,6 @@ services:
       NODE_ENV: production
       DATA_MODE: demo
       PORT: 3000
-      TZ: America/Santiago
-      APP_URL: http://localhost:${APP_PORT:-8090}
     ports:
       - "${APP_PORT:-8090}:3000"
     healthcheck:
