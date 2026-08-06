@@ -25,16 +25,6 @@ export function createApp() {
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, 'views'));
 
-  app.use((req, res, next) => {
-    res.locals.user = req.session?.user ?? {};
-    res.locals.NAV_GROUPS = NAV_GROUPS;
-    res.locals.MOBILE_NAV = MOBILE_NAV;
-    res.locals.ACTIVEPATH = req.path;
-    res.locals.crumbs = breadcrumbsFor(req.path);
-    res.locals.isDemoBanner = env.DATA_MODE === 'demo';
-    next();
-  });
-
   app.use(requestId);
   app.use(
     pinoHttp({
@@ -55,11 +45,25 @@ export function createApp() {
   app.use(express.urlencoded({ extended: false, limit: '1mb' }));
   app.use(express.json({ limit: '1mb' }));
   app.use(express.static(path.join(__dirname, 'public'), { index: false }));
-  app.use(isTest ? buildSessionMiddleware() : sessionMiddleware);
+  app.use(isTest || env.DATA_MODE === 'demo' ? buildSessionMiddleware() : sessionMiddleware);
+
+  app.use((req, res, next) => {
+    res.locals.user = req.session?.user ?? {};
+    res.locals.NAV_GROUPS = NAV_GROUPS;
+    res.locals.MOBILE_NAV = MOBILE_NAV;
+    res.locals.ACTIVEPATH = req.path;
+    res.locals.crumbs = breadcrumbsFor(req.path);
+    res.locals.isDemoBanner = env.DATA_MODE === 'demo';
+    next();
+  });
 
   app.get('/health/live', (_req, res) => res.status(200).json({ status: 'ok' }));
 
   app.get('/health/ready', async (_req, res) => {
+    if (env.DATA_MODE === 'demo') {
+      return res.status(200).json({ status: 'ready' });
+    }
+
     try {
       const ok = await pingDatabase();
       res.status(ok ? 200 : 503).json({ status: ok ? 'ready' : 'degraded' });
