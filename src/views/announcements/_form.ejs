@@ -2,11 +2,12 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Crear un aviso', actions: [{ label: 'Volver', href: '/app/comunicados', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="title" class="label">Titulo</label>
-          <input id="title" name="title" class="input" required />
+          <input id="title" name="title" class="input" value="<%= item.title || '' %>" <%= errors.title ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.title) { %><p class="text-xs text-danger mt-1"><%= errors.title %></p><% } %>
         </div>
         <div>
           <label for="priority" class="label">Prioridad</label>
@@ -18,7 +19,7 @@
         </div>
         <div class="md:col-span-2">
           <label for="body" class="label">Contenido</label>
-          <textarea id="body" name="body" class="textarea" required></textarea>
+          <textarea id="body" name="body" class="textarea" required><%= item.body || '' %></textarea>
         </div>
         <div>
           <label for="publishedAt" class="label">Publicacion</label>
@@ -30,8 +31,8 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/comunicados" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar comunicado">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

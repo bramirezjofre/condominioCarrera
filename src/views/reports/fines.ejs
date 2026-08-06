@@ -1,10 +1,1 @@
-<div class="space-y-6">
-  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Multas por estado', actions: [{ label: 'Exportar', href: '#', class: 'btn-secondary' }] }) %>
-
-  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-    <%- include('../partials/stat-card', { label: 'Borrador', value: 1 }) %>
-    <%- include('../partials/stat-card', { label: 'Notificadas', value: 2 }) %>
-    <%- include('../partials/stat-card', { label: 'Confirmadas', value: 2 }) %>
-    <%- include('../partials/stat-card', { label: 'Pagadas', value: 1 }) %>
-  </div>
-</div>
+<%- include('../_app-shell', { partialPath: 'reports/_fines.ejs' }) %>

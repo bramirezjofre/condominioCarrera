@@ -2,15 +2,17 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos personales', actions: [{ label: 'Volver', href: '/app/personas', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="firstName" class="label">Nombre</label>
-          <input id="firstName" name="firstName" class="input" value="<%= item.firstName %>" required />
+          <input id="firstName" name="firstName" class="input" value="<%= item.firstName %>" <%= errors.firstName ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.firstName) { %><p class="text-xs text-danger mt-1"><%= errors.firstName %></p><% } %>
         </div>
         <div>
           <label for="lastName" class="label">Apellido</label>
-          <input id="lastName" name="lastName" class="input" value="<%= item.lastName %>" required />
+          <input id="lastName" name="lastName" class="input" value="<%= item.lastName %>" <%= errors.lastName ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.lastName) { %><p class="text-xs text-danger mt-1"><%= errors.lastName %></p><% } %>
         </div>
         <div>
           <label for="nationalId" class="label">RUN / RUT</label>
@@ -30,8 +32,8 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/personas" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar persona">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

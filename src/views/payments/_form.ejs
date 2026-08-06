@@ -2,7 +2,7 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Carga un nuevo pago', actions: [{ label: 'Volver', href: '/app/pagos', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="unitId" class="label">Unidad</label>
@@ -12,6 +12,7 @@
               <option value="<%= u.id %>"><%= u.number %></option>
             <% } %>
           </select>
+          <% if (errors.unitId) { %><p class="text-xs text-danger mt-1"><%= errors.unitId %></p><% } %>
         </div>
         <div>
           <label for="payerPersonId" class="label">Pagador</label>
@@ -21,10 +22,12 @@
               <option value="<%= p.id %>"><%= p.fullName %></option>
             <% } %>
           </select>
+          <% if (errors.payerPersonId) { %><p class="text-xs text-danger mt-1"><%= errors.payerPersonId %></p><% } %>
         </div>
         <div>
           <label for="amount" class="label">Monto</label>
-          <input id="amount" name="amount" type="number" class="input" required />
+          <input id="amount" name="amount" type="number" class="input" value="<%= item.amount ?? '' %>" <%= errors.amount ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.amount) { %><p class="text-xs text-danger mt-1"><%= errors.amount %></p><% } %>
         </div>
         <div>
           <label for="paymentMethod" class="label">Metodo</label>
@@ -44,8 +47,8 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Registrar</button>
-        <a href="/app/pagos" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Registrar pago">Registrar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

@@ -1,0 +1,34 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Uso de espacios comunes', actions: [{ label: 'Exportar', href: '/app/reportes/reservas/csv', class: 'btn-secondary' }] }) %>
+
+  <% const reportTotal = locals.total || 0; %>
+  <% const reportByStatus = locals.byStatus || {}; %>
+  <% const statusLabels = { requested: 'Solicitadas', approved: 'Aprobadas', rejected: 'Rechazadas', cancelled: 'Canceladas' }; %>
+  <% const statusKeys = Object.keys(statusLabels); %>
+
+  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <%- include('../partials/stat-card', { label: 'Total', value: reportTotal }) %>
+    <%- include('../partials/stat-card', { label: 'Solicitadas', value: reportByStatus.requested || 0 }) %>
+    <%- include('../partials/stat-card', { label: 'Aprobadas', value: reportByStatus.approved || 0 }) %>
+    <%- include('../partials/stat-card', { label: 'Rechazadas', value: reportByStatus.rejected || 0 }) %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Distribucion por estado</h2>
+    <ul class="space-y-3">
+      <% for (const key of statusKeys) { %>
+        <% const count = reportByStatus[key] || 0; %>
+        <% const pct = reportTotal === 0 ? 0 : Math.round((count / reportTotal) * 100); %>
+        <li>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="font-medium"><%= statusLabels[key] %></span>
+            <span class="text-muted"><%= count %> (<%= pct %>%)</span>
+          </div>
+          <div class="h-2 bg-ivory rounded-full overflow-hidden">
+            <div class="h-full bg-gold-pattern" style="width: <%= pct %>%"></div>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  </section>
+</div>

@@ -2,11 +2,12 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Subida de documento', actions: [{ label: 'Volver', href: '/app/documentos', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="title" class="label">Titulo</label>
-          <input id="title" name="title" class="input" required />
+          <input id="title" name="title" class="input" value="<%= item.title || '' %>" <%= errors.title ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.title) { %><p class="text-xs text-danger mt-1"><%= errors.title %></p><% } %>
         </div>
         <div>
           <label for="categoryId" class="label">Categoria</label>
@@ -30,12 +31,12 @@
         </div>
         <div class="md:col-span-2">
           <label for="description" class="label">Descripcion</label>
-          <textarea id="description" name="description" class="textarea"></textarea>
+          <textarea id="description" name="description" class="textarea"><%= item.description || '' %></textarea>
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/documentos" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar documento">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

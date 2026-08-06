@@ -7,9 +7,24 @@
     <p class="text-base"><%= item.body %></p>
   </article>
 
-  <div class="card flex flex-wrap gap-2">
-    <button class="btn-primary" disabled>Publicar</button>
-    <button class="btn-secondary" disabled>Programar</button>
-    <button class="btn-danger" disabled>Archivar</button>
-  </div>
+  <% if (canPublish) { %>
+    <div class="card flex flex-wrap gap-2">
+      <% if (item.status === 'draft') { %>
+        <form method="post" action="/app/comunicados/<%= item.id %>/publicar" class="inline">
+          <button type="submit" class="btn-primary" aria-label="Publicar comunicado">Publicar</button>
+        </form>
+        <form method="post" action="/app/comunicados/<%= item.id %>/programar" class="inline">
+          <label class="flex items-center gap-2">
+            <input type="datetime-local" name="scheduledAt" class="input" required />
+          </label>
+          <button type="submit" class="btn-secondary" aria-label="Programar comunicado">Programar</button>
+        </form>
+      <% } %>
+      <% if (item.status !== 'archived') { %>
+        <form method="post" action="/app/comunicados/<%= item.id %>/archivar" class="inline">
+          <button type="submit" class="btn-danger" aria-label="Archivar comunicado">Archivar</button>
+        </form>
+      <% } %>
+    </div>
+  <% } %>
 </div>

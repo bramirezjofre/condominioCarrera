@@ -1,4 +1,4 @@
-import { NAV_GROUPS, MOBILE_NAV, breadcrumbsFor } from '../navigation.js';
+import { NAV_GROUPS, MOBILE_NAV, breadcrumbsFor, resolveAlias } from '../navigation.js';
 
 export function renderPage(req, res, view, locals = {}) {
   const user = req.session?.user ?? {};
@@ -7,6 +7,7 @@ export function renderPage(req, res, view, locals = {}) {
     NAV_GROUPS,
     MOBILE_NAV,
     ACTIVEPATH: path,
+    ALIASED_PATH: resolveAlias(path),
     user,
     crumbs: breadcrumbsFor(path),
     isDemoBanner: true,

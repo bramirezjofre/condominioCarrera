@@ -1,0 +1,16 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Detalle de gastos del periodo', actions: [{ label: 'Volver', href: '/app/gastos-comunes/' + period.id, class: 'btn-secondary' }] }) %>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <% for (const c of categories) { %>
+      <div class="card">
+        <p class="text-sm text-muted"><%= c.name %></p>
+        <p class="font-display text-2xl text-navy-900 mt-2">$ <%= Math.round(period.totalAmount / categories.length / 1000) %>k</p>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="alert alert-info">
+    Los gastos del periodo se distribuyen en prorrateo por unidad. La edicion detallada estara disponible al implementar el modulo financiero.
+  </div>
+</div>

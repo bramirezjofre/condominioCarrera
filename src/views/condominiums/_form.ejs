@@ -1,40 +1,47 @@
 <div class="space-y-6">
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Edicion de datos institucionales', actions: [{ label: 'Volver', href: '/app/condominios', class: 'btn-secondary' }] }) %>
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="name" class="label">Nombre</label>
-          <input id="name" name="name" class="input" value="<%= item.name %>" required />
+          <input id="name" name="name" class="input" value="<%= item.name %>" <%= errors.name ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.name) { %><p class="text-xs text-danger mt-1"><%= errors.name %></p><% } %>
         </div>
         <div>
           <label for="legalName" class="label">Razon social</label>
           <input id="legalName" name="legalName" class="input" value="<%= item.legalName %>" />
+          <% if (errors.legalName) { %><p class="text-xs text-danger mt-1"><%= errors.legalName %></p><% } %>
         </div>
         <div>
           <label for="taxId" class="label">RUT</label>
           <input id="taxId" name="taxId" class="input" value="<%= item.taxId %>" />
+          <% if (errors.taxId) { %><p class="text-xs text-danger mt-1"><%= errors.taxId %></p><% } %>
         </div>
         <div>
           <label for="currency" class="label">Moneda</label>
           <input id="currency" name="currency" class="input" value="<%= item.currency %>" />
+          <% if (errors.currency) { %><p class="text-xs text-danger mt-1"><%= errors.currency %></p><% } %>
         </div>
         <div class="md:col-span-2">
           <label for="address" class="label">Direccion</label>
           <input id="address" name="address" class="input" value="<%= item.address %>" />
+          <% if (errors.address) { %><p class="text-xs text-danger mt-1"><%= errors.address %></p><% } %>
         </div>
         <div>
           <label for="commune" class="label">Comuna</label>
           <input id="commune" name="commune" class="input" value="<%= item.commune %>" />
+          <% if (errors.commune) { %><p class="text-xs text-danger mt-1"><%= errors.commune %></p><% } %>
         </div>
         <div>
           <label for="region" class="label">Region</label>
           <input id="region" name="region" class="input" value="<%= item.region %>" />
+          <% if (errors.region) { %><p class="text-xs text-danger mt-1"><%= errors.region %></p><% } %>
         </div>
       </div>
       <div class="flex gap-2">
         <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/condominios" class="btn-secondary">Cancelar</a>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

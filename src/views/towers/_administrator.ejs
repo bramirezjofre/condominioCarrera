@@ -2,7 +2,7 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Cambiar el administrador principal de la torre', actions: [{ label: 'Volver', href: '/app/torres/' + tower.id, class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div>
         <label for="userId" class="label">Seleccionar nuevo administrador</label>
         <select id="userId" name="userId" class="select" required>
@@ -11,10 +11,11 @@
             <option value="<%= c.id %>"><%= c.person ? c.person.fullName : c.username %> - <%= c.email %></option>
           <% } %>
         </select>
+        <% if (errors.userId) { %><p class="text-xs text-danger mt-1"><%= errors.userId %></p><% } %>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Asignar</button>
-        <a href="/app/torres/<%= tower.id %>" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Asignar administrador">Asignar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

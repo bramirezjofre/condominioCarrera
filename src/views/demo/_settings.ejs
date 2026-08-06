@@ -1,0 +1,23 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Parametros generales', actions: [] }) %>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <div class="card">
+      <h2 class="font-display text-lg text-navy-900 mb-2">Institucional</h2>
+      <p class="text-sm text-muted">Nombre del condominio, datos legales, direccion.</p>
+      <a href="/app/condominios" class="text-sm text-navy-900 hover:underline mt-3 inline-block">Editar</a>
+    </div>
+    <div class="card">
+      <h2 class="font-display text-lg text-navy-900 mb-2">Zona horaria y moneda</h2>
+      <p class="text-sm text-muted">America/Santiago, CLP.</p>
+    </div>
+    <div class="card">
+      <h2 class="font-display text-lg text-navy-900 mb-2">Politica de intereses</h2>
+      <p class="text-sm text-muted">Aplica a partir del primer dia de mora.</p>
+    </div>
+    <div class="card">
+      <h2 class="font-display text-lg text-navy-900 mb-2">Datos bancarios</h2>
+      <p class="text-sm text-muted">Cuenta corriente, transferencia habilitada.</p>
+    </div>
+  </div>
+</div>

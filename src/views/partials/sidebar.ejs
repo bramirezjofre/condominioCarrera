@@ -1,6 +1,6 @@
 <%
-  const groups = (typeof navGroups !== 'undefined' && navGroups) || [];
-  const active = (typeof path !== 'undefined' && path) || (typeof ACTIVEPATH !== 'undefined' && ACTIVEPATH) || '';
+  const groups = (typeof NAV_GROUPS !== 'undefined' && NAV_GROUPS) || (typeof navGroups !== 'undefined' && navGroups) || [];
+  const active = (typeof ALIASED_PATH !== 'undefined' && ALIASED_PATH) || (typeof ACTIVEPATH !== 'undefined' && ACTIVEPATH) || '';
   const userData = (typeof user !== 'undefined' && user) || (typeof locals !== 'undefined' && locals.user) || {};
 %>
 <aside class="hidden lg:flex lg:flex-col w-72 bg-navy-900 text-white shrink-0" aria-label="Navegacion principal">

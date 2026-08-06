@@ -2,19 +2,22 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Edicion de torre', actions: [{ label: 'Volver', href: '/app/torres', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="name" class="label">Nombre</label>
-          <input id="name" name="name" class="input" value="<%= item.name %>" required />
+          <input id="name" name="name" class="input" value="<%= item.name %>" <%= errors.name ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.name) { %><p class="text-xs text-danger mt-1"><%= errors.name %></p><% } %>
         </div>
         <div>
           <label for="code" class="label">Codigo</label>
-          <input id="code" name="code" class="input" value="<%= item.code %>" required />
+          <input id="code" name="code" class="input" value="<%= item.code %>" <%= errors.code ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.code) { %><p class="text-xs text-danger mt-1"><%= errors.code %></p><% } %>
         </div>
         <div>
           <label for="floorCount" class="label">Pisos</label>
-          <input id="floorCount" name="floorCount" type="number" class="input" value="<%= item.floorCount %>" />
+          <input id="floorCount" name="floorCount" type="number" class="input" value="<%= item.floorCount %>" <%= errors.floorCount ? 'aria-invalid="true"' : '' %> />
+          <% if (errors.floorCount) { %><p class="text-xs text-danger mt-1"><%= errors.floorCount %></p><% } %>
         </div>
         <div>
           <label for="addressDetail" class="label">Direccion</label>
@@ -22,8 +25,8 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/torres" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar torre">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

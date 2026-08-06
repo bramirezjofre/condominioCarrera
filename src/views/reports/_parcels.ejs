@@ -1,0 +1,15 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Resumen de encomiendas', actions: [{ label: 'Exportar', href: '/app/reportes/encomiendas/csv', class: 'btn-secondary' }] }) %>
+
+  <% const reportTotal = locals.total || 0; %>
+  <% const reportPendientes = locals.pendientes || 0; %>
+  <% const reportEntregadas = locals.entregadas || 0; %>
+  <% const reportDevueltas = locals.devueltas || 0; %>
+
+  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <%- include('../partials/stat-card', { label: 'Total', value: reportTotal }) %>
+    <%- include('../partials/stat-card', { label: 'Pendientes', value: reportPendientes }) %>
+    <%- include('../partials/stat-card', { label: 'Entregadas', value: reportEntregadas }) %>
+    <%- include('../partials/stat-card', { label: 'Devueltas', value: reportDevueltas }) %>
+  </section>
+</div>

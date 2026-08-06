@@ -1,0 +1,99 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Resumen de tus unidades, pagos, multas y encomiendas', actions: [{ label: 'Volver al panel', href: '/app', class: 'btn-secondary' }] }) %>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Unidades</h2>
+    <% if (units.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin unidad asignada', description: 'Contacta a la administracion para vincular tu unidad.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const u of units) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium">Unidad <%= u.number %></p>
+              <p class="text-xs text-muted">Piso <%= u.floor || '-' %> - Coef. <%= u.prorationFactor %></p>
+            </div>
+            <span class="badge-success">Vigente</span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Ocupaciones vigentes</h2>
+    <% if (occupancies.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin ocupaciones', description: 'No tienes ocupaciones registradas actualmente.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const o of occupancies) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium">Unidad <%= o.unitId %></p>
+              <p class="text-xs text-muted">Desde <%= o.startsOn %></p>
+            </div>
+            <span class="badge-success">Vigente</span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Pagos recientes</h2>
+    <% if (payments.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin pagos', description: 'Tus pagos apareceran aqui.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const p of payments.slice(0, 5)) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium">$ <%= Math.round(p.amount / 1000) %>k</p>
+              <p class="text-xs text-muted"><%= p.paymentMethod %> - <%= p.paidAt %></p>
+            </div>
+            <span class="badge-muted"><%= p.status %></span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Multas</h2>
+    <% if (fines.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin multas', description: 'No tienes multas registradas.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const f of fines) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium"><%= f.reason %></p>
+              <p class="text-xs text-muted">$ <%= Math.round(f.amount / 1000) %>k - <%= f.incidentAt %></p>
+            </div>
+            <span class="badge-muted"><%= f.status %></span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <h2 class="font-display text-xl text-navy-900 mb-4">Encomiendas pendientes</h2>
+    <% const pendientes = parcels.filter((p) => p.status !== 'delivered'); %>
+    <% if (pendientes.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin encomiendas', description: 'No tienes encomiendas pendientes.' }) %>
+    <% } else { %>
+      <ul class="divide-y divide-border">
+        <% for (const p of pendientes) { %>
+          <li class="py-3 flex items-center justify-between">
+            <div>
+              <p class="font-medium"><%= p.carrier %></p>
+              <p class="text-xs text-muted">Recibido <%= p.receivedAt %></p>
+            </div>
+            <span class="badge-muted"><%= p.status %></span>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
+  </section>
+</div>

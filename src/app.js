@@ -6,11 +6,11 @@ import pinoHttp from 'pino-http';
 
 import { isProduction, env } from './config/env.js';
 import { logger } from './config/logger.js';
-import { sessionMiddleware } from './config/session.js';
+import { sessionMiddleware, buildSessionMiddleware } from './config/session.js';
+import { isTest } from './config/env.js';
 import { pingDatabase } from './db/health.js';
 import { requestId } from './middleware/request-id.js';
 import { authRoutes } from './modules/auth/auth.routes.js';
-import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js';
 import { demoRoutes } from './modules/demo/demo.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { NAV_GROUPS, MOBILE_NAV, breadcrumbsFor } from './shared/navigation.js';
@@ -55,7 +55,7 @@ export function createApp() {
   app.use(express.urlencoded({ extended: false, limit: '1mb' }));
   app.use(express.json({ limit: '1mb' }));
   app.use(express.static(path.join(__dirname, 'public'), { index: false }));
-  app.use(sessionMiddleware);
+  app.use(isTest ? buildSessionMiddleware() : sessionMiddleware);
 
   app.get('/health/live', (_req, res) => res.status(200).json({ status: 'ok' }));
 
@@ -70,7 +70,6 @@ export function createApp() {
   });
 
   app.use(authRoutes);
-  app.use(dashboardRoutes);
   app.use(demoRoutes);
 
   app.use(notFoundHandler);

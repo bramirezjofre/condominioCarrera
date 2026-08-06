@@ -2,19 +2,20 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Edicion de periodo', actions: [{ label: 'Volver', href: '/app/gastos-comunes', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="month" class="label">Mes</label>
           <select id="month" name="month" class="select">
-            <% for (const m of ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']) { %>
+            <% for (const m of months) { %>
               <option value="<%= m %>" <%= item.monthName === m ? 'selected' : '' %>><%= m %></option>
             <% } %>
           </select>
         </div>
         <div>
           <label for="year" class="label">Ano</label>
-          <input id="year" name="year" type="number" class="input" value="<%= item.year || 2026 %>" />
+          <input id="year" name="year" type="number" class="input" value="<%= item.year || 2026 %>" <%= errors.year ? 'aria-invalid="true"' : '' %> />
+          <% if (errors.year) { %><p class="text-xs text-danger mt-1"><%= errors.year %></p><% } %>
         </div>
         <div>
           <label for="dueDate" class="label">Vencimiento</label>
@@ -22,12 +23,13 @@
         </div>
         <div>
           <label for="totalAmount" class="label">Monto total</label>
-          <input id="totalAmount" name="totalAmount" type="number" class="input" value="<%= item.totalAmount || '' %>" />
+          <input id="totalAmount" name="totalAmount" type="number" class="input" value="<%= item.totalAmount || '' %>" <%= errors.totalAmount ? 'aria-invalid="true"' : '' %> />
+          <% if (errors.totalAmount) { %><p class="text-xs text-danger mt-1"><%= errors.totalAmount %></p><% } %>
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/gastos-comunes" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar periodo">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

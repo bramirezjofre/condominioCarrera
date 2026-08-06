@@ -23,3 +23,19 @@ export const sessionMiddleware = session({
     maxAge: 8 * 60 * 60 * 1000
   }
 });
+
+export function buildSessionMiddleware() {
+  return session({
+    name: env.SESSION_COOKIE_NAME,
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 8 * 60 * 60 * 1000
+    }
+  });
+}

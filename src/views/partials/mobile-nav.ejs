@@ -1,6 +1,6 @@
 <%
   const mobileItems = (typeof MOBILE_NAV !== 'undefined' && MOBILE_NAV) || [];
-  const currentPath = (typeof ACTIVEPATH !== 'undefined' && ACTIVEPATH) || '';
+  const currentPath = (typeof ALIASED_PATH !== 'undefined' && ALIASED_PATH) || (typeof ACTIVEPATH !== 'undefined' && ACTIVEPATH) || '';
 %>
 <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-border shadow-elevated" aria-label="Navegacion inferior">
   <ul class="grid grid-cols-5">

@@ -12,14 +12,28 @@
     <div><dt class="text-muted">Verificado por</dt><dd class="font-medium"><%= item.verifiedBy || '-' %></dd></div>
   </section>
 
-  <div class="card">
-    <h2 class="font-display text-xl text-navy-900 mb-4">Acciones</h2>
-    <div class="flex flex-wrap gap-2">
-      <button class="btn-primary" disabled>Verificar</button>
-      <button class="btn-secondary" disabled>Rechazar</button>
-      <button class="btn-danger" disabled>Reversar</button>
-      <a href="/app/pagos" class="btn-ghost">Volver al listado</a>
+  <% if (user.roleCodes?.includes('accountant') || user.isCondominiumAdmin) { %>
+    <div class="card">
+      <h2 class="font-display text-xl text-navy-900 mb-4">Acciones</h2>
+      <div class="flex flex-wrap gap-2">
+        <% if (item.status === 'pending_verification') { %>
+          <form method="post" action="/app/pagos/<%= item.id %>/verificar" class="inline">
+            <button type="submit" class="btn-primary" aria-label="Verificar pago">Verificar</button>
+          </form>
+          <form method="post" action="/app/pagos/<%= item.id %>/rechazar" class="inline">
+            <button type="submit" class="btn-secondary" aria-label="Rechazar pago">Rechazar</button>
+          </form>
+        <% } %>
+        <% if (item.status === 'verified') { %>
+          <form method="post" action="/app/pagos/<%= item.id %>/reversar" class="inline">
+            <label class="flex items-center gap-2">
+              <input type="text" name="reason" placeholder="Motivo obligatorio" class="input" required />
+            </label>
+            <button type="submit" class="btn-danger" aria-label="Reversar pago">Reversar</button>
+          </form>
+        <% } %>
+        <a href="/app/pagos" class="btn-ghost">Volver al listado</a>
+      </div>
     </div>
-    <p class="text-xs text-muted mt-3">Las acciones se habilitaran al integrar el modulo financiero.</p>
-  </div>
+  <% } %>
 </div>

@@ -2,11 +2,12 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos de la unidad', actions: [{ label: 'Volver', href: '/app/torres/' + (tower ? tower.id : ''), class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="number" class="label">Numero</label>
-          <input id="number" name="number" class="input" value="<%= item.number %>" required />
+          <input id="number" name="number" class="input" value="<%= item.number %>" <%= errors.number ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.number) { %><p class="text-xs text-danger mt-1"><%= errors.number %></p><% } %>
         </div>
         <div>
           <label for="floor" class="label">Piso</label>
@@ -22,7 +23,8 @@
         </div>
         <div>
           <label for="prorationFactor" class="label">Prorrateo</label>
-          <input id="prorationFactor" name="prorationFactor" type="number" step="0.000001" class="input" value="<%= item.prorationFactor %>" />
+          <input id="prorationFactor" name="prorationFactor" type="number" step="0.000001" class="input" value="<%= item.prorationFactor %>" <%= errors.prorationFactor ? 'aria-invalid="true"' : '' %> />
+          <% if (errors.prorationFactor) { %><p class="text-xs text-danger mt-1"><%= errors.prorationFactor %></p><% } %>
         </div>
         <div>
           <label for="areaM2" class="label">Area m2</label>
@@ -30,8 +32,8 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/torres/<%= tower ? tower.id : '' %>" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar unidad">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

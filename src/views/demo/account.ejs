@@ -1,12 +1,1 @@
-<div class="space-y-6">
-  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos de la cuenta', actions: [{ label: 'Cambiar contrasena', href: '/app/cambiar-contrasena', class: 'btn-secondary' }, { label: 'Cerrar sesion', href: '/logout', class: 'btn-gold' }] }) %>
-
-  <section class="card grid gap-4 md:grid-cols-2">
-    <div><dt class="text-muted">Nombre</dt><dd class="font-medium"><%= person ? person.fullName : user.fullName %></dd></div>
-    <div><dt class="text-muted">Email</dt><dd class="font-medium"><%= user.email %></dd></div>
-    <div><dt class="text-muted">Roles</dt><dd class="font-medium"><%= roleCodes?.join(', ') %></dd></div>
-    <div><dt class="text-muted">Torres</dt><dd class="font-medium"><%= towerNames?.join(', ') || '-' %></dd></div>
-    <div><dt class="text-muted">Unidades</dt><dd class="font-medium"><%= unitNumbers?.join(', ') || '-' %></dd></div>
-    <div><dt class="text-muted">Cambio de contrasena</dt><dd class="font-medium"><%= user.mustChangePassword ? 'Pendiente' : 'Completado' %></dd></div>
-  </section>
-</div>
+<%- include('../_app-shell', { partialPath: 'demo/_account.ejs' }) %>

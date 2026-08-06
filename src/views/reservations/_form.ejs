@@ -2,7 +2,7 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Solicitud de espacio', actions: [{ label: 'Volver', href: '/app/reservas', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="amenityId" class="label">Espacio</label>
@@ -12,6 +12,7 @@
               <option value="<%= a.id %>"><%= a.name %></option>
             <% } %>
           </select>
+          <% if (errors.amenityId) { %><p class="text-xs text-danger mt-1"><%= errors.amenityId %></p><% } %>
         </div>
         <div>
           <label for="unitId" class="label">Unidad</label>
@@ -21,23 +22,24 @@
               <option value="<%= u.id %>"><%= u.number %></option>
             <% } %>
           </select>
+          <% if (errors.unitId) { %><p class="text-xs text-danger mt-1"><%= errors.unitId %></p><% } %>
         </div>
         <div>
           <label for="startsAt" class="label">Inicio</label>
-          <input id="startsAt" name="startsAt" type="datetime-local" class="input" />
+          <input id="startsAt" name="startsAt" type="datetime-local" class="input" value="<%= item.startsAt || '' %>" required />
         </div>
         <div>
           <label for="endsAt" class="label">Fin</label>
-          <input id="endsAt" name="endsAt" type="datetime-local" class="input" />
+          <input id="endsAt" name="endsAt" type="datetime-local" class="input" value="<%= item.endsAt || '' %>" required />
         </div>
         <div>
           <label for="attendeeCount" class="label">Asistentes</label>
-          <input id="attendeeCount" name="attendeeCount" type="number" class="input" value="4" />
+          <input id="attendeeCount" name="attendeeCount" type="number" class="input" value="<%= item.attendeeCount || 4 %>" />
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Solicitar</button>
-        <a href="/app/reservas" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Solicitar reserva">Solicitar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

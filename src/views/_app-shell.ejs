@@ -18,6 +18,7 @@
       <main id="mainContent" class="flex-1 px-4 md:px-8 py-6 bg-ivory">
         <div class="mx-auto max-w-7xl">
           <%- include('partials/demo-banner') %>
+          <%- include('partials/flash-message') %>
           <% if (typeof crumbs !== 'undefined' && crumbs && crumbs && crumbs.length > 1) { %>
             <%- include('partials/breadcrumbs') %>
           <% } %>

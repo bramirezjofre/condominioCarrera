@@ -1,34 +1,37 @@
 <div class="space-y-6">
-  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Resumen del periodo', actions: [{ label: 'Exportar CSV', href: '#', class: 'btn-secondary' }, { label: 'Exportar PDF', href: '#', class: 'btn-gold' }] }) %>
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Resumen financiero del condominio', actions: [{ label: 'Exportar CSV', href: '/app/reportes/financiero/csv', class: 'btn-secondary' }] }) %>
+
+  <% const reportFacturado = locals.facturado || 0; %>
+  <% const reportCobrado = locals.cobrado || 0; %>
+  <% const reportSaldo = locals.saldo || 0; %>
+  <% const reportTasa = locals.tasa || 0; %>
 
   <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-    <%- include('../partials/stat-card', { label: 'Total facturado', value: '$ 12.5M' }) %>
-    <%- include('../partials/stat-card', { label: 'Total pagado', value: '$ 9.8M' }) %>
-    <%- include('../partials/stat-card', { label: 'Saldo', value: '$ 2.7M' }) %>
-    <%- include('../partials/stat-card', { label: 'Tasa de pago', value: '78%' }) %>
+    <%- include('../partials/stat-card', { label: 'Total facturado', value: '$ ' + Math.round(reportFacturado / 1000) + 'k' }) %>
+    <%- include('../partials/stat-card', { label: 'Total pagado', value: '$ ' + Math.round(reportCobrado / 1000) + 'k' }) %>
+    <%- include('../partials/stat-card', { label: 'Saldo', value: '$ ' + Math.round(Math.max(reportSaldo, 0) / 1000) + 'k' }) %>
+    <%- include('../partials/stat-card', { label: 'Tasa de pago', value: reportTasa + '%' }) %>
   </div>
 
   <div class="card">
-    <h2 class="font-display text-xl text-navy-900 mb-4">Distribucion de gastos</h2>
-    <ul class="space-y-3">
-      <% for (const item of [
-        { label: 'Mantenciones', percent: 35 },
-        { label: 'Personal', percent: 25 },
-        { label: 'Servicios basicos', percent: 20 },
-        { label: 'Seguros', percent: 10 },
-        { label: 'Administracion', percent: 7 },
-        { label: 'Otros', percent: 3 }
-      ]) { %>
-        <li>
-          <div class="flex justify-between text-sm mb-1">
-            <span class="font-medium"><%= item.label %></span>
-            <span class="text-muted"><%= item.percent %>%</span>
-          </div>
-          <div class="h-2 bg-ivory rounded-full overflow-hidden">
-            <div class="h-full bg-gold-pattern" style="width: <%= item.percent %>%"></div>
-          </div>
-        </li>
-      <% } %>
-    </ul>
+    <h2 class="font-display text-xl text-navy-900 mb-4">Categorias de gasto</h2>
+    <% const cats = locals.categories || []; %>
+    <% if (cats.length === 0) { %>
+      <%- include('../partials/empty-state', { title: 'Sin categorias', description: 'Aun no se registran categorias de gasto.' }) %>
+    <% } else { %>
+      <ul class="space-y-3">
+        <% for (const c of cats) { %>
+          <li>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-medium"><%= c.label %></span>
+              <span class="text-muted"><%= c.percent %>%</span>
+            </div>
+            <div class="h-2 bg-ivory rounded-full overflow-hidden">
+              <div class="h-full bg-gold-pattern" style="width: <%= c.percent %>%"></div>
+            </div>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
   </div>
 </div>

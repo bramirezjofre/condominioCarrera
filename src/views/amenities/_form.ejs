@@ -2,23 +2,24 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Configuracion del espacio', actions: [{ label: 'Volver', href: '/app/espacios-comunes', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="name" class="label">Nombre</label>
-          <input id="name" name="name" class="input" required />
+          <input id="name" name="name" class="input" value="<%= item.name || '' %>" <%= errors.name ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.name) { %><p class="text-xs text-danger mt-1"><%= errors.name %></p><% } %>
         </div>
         <div>
           <label for="capacity" class="label">Capacidad</label>
-          <input id="capacity" name="capacity" type="number" class="input" value="20" />
+          <input id="capacity" name="capacity" type="number" class="input" value="<%= item.capacity || 20 %>" />
         </div>
         <div>
           <label for="price" class="label">Tarifa</label>
-          <input id="price" name="price" type="number" class="input" />
+          <input id="price" name="price" type="number" class="input" value="<%= item.price || '' %>" />
         </div>
         <div>
           <label for="depositAmount" class="label">Deposito</label>
-          <input id="depositAmount" name="depositAmount" type="number" class="input" />
+          <input id="depositAmount" name="depositAmount" type="number" class="input" value="<%= item.depositAmount || '' %>" />
         </div>
         <div class="flex items-center gap-2 md:col-span-2">
           <input id="requiresApproval" name="requiresApproval" type="checkbox" <%= item.requiresApproval ? 'checked' : '' %> />
@@ -26,8 +27,8 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/espacios-comunes" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar espacio">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

@@ -1,0 +1,19 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Categorias de gasto configuradas', actions: [{ label: 'Exportar', href: '/app/reportes/gastos/csv', class: 'btn-secondary' }] }) %>
+
+  <% const reportCategories = locals.categories || []; %>
+  <% if (reportCategories.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin categorias', description: 'Aun no hay categorias de gasto.' }) %>
+  <% } else { %>
+    <div class="card">
+      <ul class="space-y-3">
+        <% for (const c of reportCategories) { %>
+          <li class="flex items-center justify-between text-sm py-2 border-b border-border last:border-0">
+            <span class="font-medium"><%= c.name %></span>
+            <span class="text-muted"><%= c.code || '' %></span>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  <% } %>
+</div>

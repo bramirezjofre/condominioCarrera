@@ -2,7 +2,7 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Asignar ocupante a la unidad', actions: [{ label: 'Volver', href: '/app/unidades/' + unit.id + '/ocupaciones', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div>
         <label for="personId" class="label">Persona</label>
         <select id="personId" name="personId" class="select" required>
@@ -11,6 +11,7 @@
             <option value="<%= p.id %>"><%= p.fullName %></option>
           <% } %>
         </select>
+        <% if (errors.personId) { %><p class="text-xs text-danger mt-1"><%= errors.personId %></p><% } %>
       </div>
       <div class="grid gap-4 md:grid-cols-2">
         <div>
@@ -23,7 +24,8 @@
         </div>
         <div>
           <label for="startsOn" class="label">Desde</label>
-          <input id="startsOn" name="startsOn" type="date" class="input" value="<%= item.startsOn %>" required />
+          <input id="startsOn" name="startsOn" type="date" class="input" value="<%= item.startsOn %>" <%= errors.startsOn ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.startsOn) { %><p class="text-xs text-danger mt-1"><%= errors.startsOn %></p><% } %>
         </div>
       </div>
       <div class="flex items-center gap-4">
@@ -38,8 +40,8 @@
         </label>
       </div>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/unidades/<%= unit.id %>/ocupaciones" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar ocupacion">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

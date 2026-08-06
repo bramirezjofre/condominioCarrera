@@ -13,8 +13,26 @@
   </section>
 
   <div class="card flex flex-wrap gap-2">
-    <button class="btn-primary" disabled>Aprobar</button>
-    <button class="btn-danger" disabled>Rechazar</button>
-    <button class="btn-secondary" disabled>Cancelar</button>
+    <% if (canManage) { %>
+      <% if (item.status === 'requested') { %>
+        <form method="post" action="/app/reservas/<%= item.id %>/aprobar" class="inline">
+          <button type="submit" class="btn-primary" aria-label="Aprobar reserva">Aprobar</button>
+        </form>
+        <form method="post" action="/app/reservas/<%= item.id %>/rechazar" class="inline">
+          <label class="flex items-center gap-2">
+            <input type="text" name="reason" placeholder="Motivo obligatorio" class="input" required />
+          </label>
+          <button type="submit" class="btn-danger" aria-label="Rechazar reserva">Rechazar</button>
+        </form>
+      <% } %>
+    <% } %>
+    <% if (item.status === 'approved' || item.status === 'requested') { %>
+      <form method="post" action="/app/reservas/<%= item.id %>/cancelar" class="inline">
+        <label class="flex items-center gap-2">
+          <input type="text" name="reason" placeholder="Motivo obligatorio" class="input" required />
+        </label>
+        <button type="submit" class="btn-secondary" aria-label="Cancelar reserva">Cancelar</button>
+      </form>
+    <% } %>
   </div>
 </div>

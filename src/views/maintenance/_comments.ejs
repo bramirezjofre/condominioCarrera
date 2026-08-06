@@ -6,21 +6,21 @@
   <% } else { %>
     <ul class="space-y-3">
       <% for (const c of comments) { %>
-        <li class="card-tight">
-          <p class="text-sm"><%= c.message %></p>
-          <p class="text-xs text-muted"><%= c.author %> - <%= c.createdAt %></p>
-        </li>
+          <li class="card-tight">
+            <p class="text-sm"><%= c.message %></p>
+            <p class="text-xs text-muted"><%= c.authorName || c.author || 'Anonimo' %> - <%= c.createdAt %></p>
+          </li>
       <% } %>
     </ul>
   <% } %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-3">
+    <form method="post" action="<%= formAction %>" class="space-y-3">
       <textarea class="textarea" name="message" placeholder="Escribe un comentario" required></textarea>
       <label class="flex items-center gap-2 text-sm">
         <input type="checkbox" name="isInternal" /> Comentario interno
       </label>
-      <button type="submit" class="btn-primary">Publicar</button>
+      <button type="submit" class="btn-primary" aria-label="Publicar comentario">Publicar</button>
     </form>
   </div>
 </div>

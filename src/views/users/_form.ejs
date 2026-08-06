@@ -2,7 +2,7 @@
   <%- include('../partials/page-header', { titleText: title, subtitleText: 'Datos del usuario', actions: [{ label: 'Volver', href: '/app/usuarios', class: 'btn-secondary' }] }) %>
 
   <div class="card">
-    <form method="post" action="#" class="space-y-4">
+    <form method="post" action="<%= formAction %>" class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
         <div>
           <label for="personId" class="label">Persona</label>
@@ -12,14 +12,17 @@
               <option value="<%= p.id %>" <%= item.personId === p.id ? 'selected' : '' %>><%= p.fullName %></option>
             <% } %>
           </select>
+          <% if (errors.personId) { %><p class="text-xs text-danger mt-1"><%= errors.personId %></p><% } %>
         </div>
         <div>
           <label for="username" class="label">Usuario</label>
-          <input id="username" name="username" class="input" value="<%= item.username %>" required />
+          <input id="username" name="username" class="input" value="<%= item.username %>" <%= errors.username ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.username) { %><p class="text-xs text-danger mt-1"><%= errors.username %></p><% } %>
         </div>
         <div>
           <label for="email" class="label">Email</label>
-          <input id="email" name="email" type="email" class="input" value="<%= item.email %>" required />
+          <input id="email" name="email" type="email" class="input" value="<%= item.email %>" <%= errors.email ? 'aria-invalid="true"' : '' %> required />
+          <% if (errors.email) { %><p class="text-xs text-danger mt-1"><%= errors.email %></p><% } %>
         </div>
         <div>
           <label for="status" class="label">Estado</label>
@@ -33,15 +36,16 @@
           <label for="role" class="label">Rol primario</label>
           <select id="role" name="role" class="select">
             <% for (const r of roles) { %>
-              <option value="<%= r %>"><%= r %></option>
+              <option value="<%= r %>" <%= item.role === r ? 'selected' : '' %>><%= r %></option>
             <% } %>
           </select>
         </div>
         <div>
           <label for="tower" class="label">Torre</label>
           <select id="tower" name="tower" class="select">
+            <option value="">Sin asignar</option>
             <% for (const t of towers) { %>
-              <option value="<%= t.id %>"><%= t.name %></option>
+              <option value="<%= t.id %>" <%= item.towerId === t.id ? 'selected' : '' %>><%= t.name %></option>
             <% } %>
           </select>
         </div>
@@ -50,8 +54,8 @@
         <input type="checkbox" name="mustChangePassword" <%= item.mustChangePassword ? 'checked' : '' %> /> Debe cambiar contrasena
       </label>
       <div class="flex gap-2">
-        <button type="submit" class="btn-primary">Guardar</button>
-        <a href="/app/usuarios" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" aria-label="Guardar usuario">Guardar</button>
+        <a href="<%= cancelHref %>" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

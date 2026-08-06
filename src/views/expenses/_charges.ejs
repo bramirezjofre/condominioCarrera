@@ -1,0 +1,42 @@
+<div class="space-y-6">
+  <%- include('../partials/page-header', { titleText: title, subtitleText: 'Cargos del periodo', actions: [{ label: 'Volver', href: '/app/gastos-comunes/' + period.id, class: 'btn-secondary' }] }) %>
+
+  <% if (charges.length === 0) { %>
+    <%- include('../partials/empty-state', { title: 'Sin cargos', description: 'Emite el periodo para generar cargos.' }) %>
+  <% } else { %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Unidad</th>
+            <th>Torre</th>
+            <th>Total</th>
+            <th>Pagado</th>
+            <th>Saldo</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <% for (const c of charges) { %>
+            <tr>
+              <td><%= c.unit ? c.unit.number : '-' %></td>
+              <td><%= c.tower ? c.tower.name : '-' %></td>
+              <td>$ <%= Math.round(c.totalAmount / 1000) %>k</td>
+              <td>$ <%= Math.round(c.paidAmount / 1000) %>k</td>
+              <td>$ <%= Math.round(c.balanceAmount / 1000) %>k</td>
+              <td>
+                <% if (c.status === 'paid') { %>
+                  <span class="badge-success">Pagado</span>
+                <% } else if (c.status === 'overdue') { %>
+                  <span class="badge-danger">Vencido</span>
+                <% } else { %>
+                  <span class="badge-warning">Pendiente</span>
+                <% } %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
